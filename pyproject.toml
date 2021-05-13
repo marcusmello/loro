@@ -6,6 +6,7 @@ authors = ["Marcus Mello <marcus@vintem.tech>"]
 license = "GPL-3.0-or-later"
 readme = "README.md"
 
+
 [tool.poetry.dependencies]
 python = "^3.9"
 fastapi = "^0.63.0"
@@ -14,10 +15,11 @@ pydantic = "^1.8.1"
 twilio = "^6.58.0"
 pendulum = "^2.1.2"
 python-multipart = "^0.0.5"
+Jinja2 = "^3.0.0"
+aiofiles = "^0.6.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
-commitizen = "^2.17.6"
 pylint = "^2.8.2"
 black = "^21.5b0"
 rope = "^0.19.0"
@@ -26,23 +28,7 @@ rope = "^0.19.0"
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
 
-[tool.commitizen]
-name = "cz_conventional_commits"
-version = "0.1.0"
-version_files = [
-    "src/__version__.py",
-    "pyproject.toml:version"
-]
-style = [
-    ["qmark", "fg:#ff9d00 bold"],
-    ["question", "bold"],
-    ["answer", "fg:#ff9d00 bold"],
-    ["pointer", "fg:#ff9d00 bold"],
-    ["highlighted", "fg:#ff9d00 bold"],
-    ["selected", "fg:#cc5454"],
-    ["separator", "fg:#cc5454"],
-    ["instruction", ""],
-    ["text", ""],
-    ["disabled", "fg:#858585 italic"]
-]
+[tool.poetry.scripts]
+loro = "loro.main:start"
+
 
