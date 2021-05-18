@@ -1,3 +1,5 @@
+#pylint:disable=missing-module-docstring
+
 from fastapi import FastAPI
 from loro.web.pages import items, home
 
