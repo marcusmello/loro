@@ -17,6 +17,7 @@ pendulum = "^2.1.2"
 python-multipart = "^0.0.5"
 Jinja2 = "^3.0.0"
 aiofiles = "^0.6.0"
+environs = "^9.3.2"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"
