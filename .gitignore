@@ -1,6 +1,9 @@
 # Dev/environment
 .vscode/
 BKP_*
+jupyterlog
+DEPRECATED_*
+*.ipynb
 
 
 # Byte-compiled / optimized / DLL files
