@@ -1,23 +1,26 @@
 # pylint: skip-file
 
+from __future__ import annotations
+
 import json
 
 from loro.core.config import settings
+from loro.lib.utils import schemas
 from pony.orm import (
     Database,
     Json,
     LongStr,
     Optional,
+    PrimaryKey,
     Required,
     Set,
     commit,
     sql_debug,
-    PrimaryKey,
 )
 
 db = Database()
 db.bind(**settings.relational_database.dict())
-sql_debug(settings.relational_database.sql_debug)
+sql_debug(settings.sql_debug)
 
 
 class AttributeUpdater(object):
@@ -27,27 +30,30 @@ class AttributeUpdater(object):
             commit()
 
 
-class Interaction(db.Entity, AttributeUpdater):
-    type_ = Required(str)
-    tag = Required(str)
-
-
 class Choice(db.Entity, AttributeUpdater):
-    interaction = Optional(Interaction)
+    dialog = Optional(lambda: Dialog)
     text = Required(LongStr)
-    leads_to = Optional(str)  # Interaction tags
+    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
 
 
-class Dialog(Interaction):
-    type_ = "d"
-    text = Required(LongStr)
-    choices: Set(Choice, cascade_delete=True)
-    leads_to = Optional(str)  # Interaction tags
+class Dialog(db.Entity, AttributeUpdater):
+    tag = Required(str, unique=True)
+    header = Required(LongStr)
+    choices = Set(Choice, cascade_delete=True)
+    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
 
 
-class Return(Interaction):
-    type_ = "r"
+class Return(db.Entity, AttributeUpdater):
+    tag = Required(str, unique=True)
     content = Required(str)
+
+    @staticmethod
+    def create(return_: schemas.Return) -> Return:
+
+        _return = Return(tag=return_.tag, content=return_.content)
+        commit()
+
+        return Return[_return.id]
 
 
 class Message(db.Entity):
