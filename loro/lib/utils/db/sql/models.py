@@ -47,14 +47,6 @@ class Return(db.Entity, AttributeUpdater):
     tag = Required(str, unique=True)
     content = Required(str)
 
-    @staticmethod
-    def create(return_: schemas.Return) -> Return:
-
-        _return = Return(tag=return_.tag, content=return_.content)
-        commit()
-
-        return Return[_return.id]
-
 
 class Message(db.Entity):
     client = Optional(lambda: FinalClient)
