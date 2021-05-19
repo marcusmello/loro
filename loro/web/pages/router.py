@@ -25,3 +25,9 @@ async def home(request: Request):
     return templates.TemplateResponse(
         "home.html", {"request": request, "domain": DOMAIN}
     )
+
+@app.get("/returns")#, response_class=HTMLResponse)
+async def test():#, limit: int = 100):
+    #returns = crud.get_returns(limit=100)
+
+    return {"Hello": "World"}

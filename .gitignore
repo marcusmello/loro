@@ -5,6 +5,7 @@ jupyterlog
 DEPRECATED_*
 *.ipynb
 database.sqlite
+DEV_*
 
 
 # Byte-compiled / optimized / DLL files

@@ -1,0 +1,15 @@
+{% extends 'base_returns.html' %}
+
+{% block interactions %}
+
+<ul id="returns">
+    {% for return_ in returns %}
+        <li>
+            <h4 style="color:green">
+                {{ return_.tag }}:{{ return_.content }}
+            </h4>
+        </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

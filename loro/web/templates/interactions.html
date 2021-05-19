@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+<!-- Page title-->
+{% block title%} {% endblock %}
+
+<!-- Common Interaction (Return or Dialog) explanation-->
+<div class="container-fluid">
+    <div class="row">
+        <h4 style="color:green">
+            Dada uma conversa entre um cliente e o chatbot, uma
+            <p><i><b>interação</b></i></p> pode ser entendida como o
+            ciclo: mensagem de entrada (lado do cliente)
+        </h4>
+    </div>
+</div>
+
+<!-- Interactions block-->
+<h5 style="color:green">
+    {% block interaction_type%} {% endblock %}
+</h5>
+
+{% block interactions %} {% endblock %}

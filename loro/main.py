@@ -1,17 +1,14 @@
 import uvicorn
-from fastapi import FastAPI, Request
-from fastapi.responses import HTMLResponse
-from fastapi.staticfiles import StaticFiles
-from fastapi.templating import Jinja2Templates
+from fastapi import FastAPI
 
 from loro.api.api_v1.api import api_router
 from loro.core.config import settings
-
-from loro.web.pages.routes import pages
+from loro.web.pages import router
 
 app = FastAPI()
 app.include_router(api_router, prefix=settings.API_V1_STR)
-app.mount('', pages)
+app.mount('', router.app)
+
 
 def start():
     """Launched with `poetry run start` at root level"""
