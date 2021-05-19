@@ -20,7 +20,6 @@ class Timesettings(BaseModel):
 
 class PostgresDatabase(BaseModel):
     provider: str = "postgres"
-    sql_debug: bool = False
     host: str = env.str("DB_HOST", default="localhost")
     port: int = env.int("POSTGRES_PORT", default=5432)
     database: str = env.str("POSTGRES_DB", default="postgres_db")
@@ -32,16 +31,20 @@ class PostgresDatabase(BaseModel):
 
 class SqliteDatabase(BaseModel):
     provider: str = "sqlite"
-    sql_debug: bool = False
     filename: str = "database.sqlite"
     create_db: bool = True
+
+
+class MemorySqliteDatabase(BaseModel):
+    provider: str ='sqlite'
+    filename:str =':memory:'
 
 
 def get_relational_database(
     provider: str,
 ) -> Union[PostgresDatabase, SqliteDatabase]:
 
-    return getattr(thismodule, "{}Database".format(provider.capitalize()))
+    return getattr(thismodule, "{}Database".format(provider.capitalize()))()
 
 
 class Settings(BaseSettings):
@@ -50,6 +53,7 @@ class Settings(BaseSettings):
     relational_database: BaseModel = get_relational_database(
         provider=env.str("RELATIONAL_DATABASE_PROVIDER", default="sqlite")
     )
+    sql_debug: bool = False
 
 
 settings = Settings()
