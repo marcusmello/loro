@@ -49,7 +49,7 @@ def get_relational_database(
 
 class Settings(BaseSettings):
     API_V1_STR: str = "/api/v1"
-    domain: str = env.str("DOMAIN", default="http://127.0.0.1:8000")
+    #domain: str = env.str("DOMAIN", default="test")
     relational_database: BaseModel = get_relational_database(
         provider=env.str("RELATIONAL_DATABASE_PROVIDER", default="sqlite")
     )
