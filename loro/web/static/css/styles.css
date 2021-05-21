@@ -160,12 +160,12 @@ sup {
 }
 
 a {
-  color: #1abc9c;
+  color: rgb(76, 187, 76);
   text-decoration: none;
   background-color: transparent;
 }
 a:hover {
-  color: #117964;
+  color: green;
   text-decoration: underline;
 }
 
@@ -2683,13 +2683,13 @@ fieldset:disabled a.btn {
 }
 
 .btn-outline-primary {
-  color: #1abc9c;
-  border-color: #1abc9c;
+  color: green;
+  border-color: green;
 }
 .btn-outline-primary:hover {
   color: #fff;
-  background-color: #1abc9c;
-  border-color: #1abc9c;
+  background-color: green;
+  border-color: green;
 }
 .btn-outline-primary:focus, .btn-outline-primary.focus {
   box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.5);
@@ -6106,13 +6106,13 @@ a.close.disabled {
 }
 
 .bg-primary {
-  background-color: #1abc9c !important;
+  background-color: rgb(76, 187, 76) !important;
 }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
 button.bg-primary:focus {
-  background-color: #148f77 !important;
+  background-color: green !important;
 }
 
 .bg-secondary {
@@ -10097,7 +10097,7 @@ h3 {
   color: #fff;
 }
 #mainNav .navbar-nav li.nav-item a.nav-link:hover {
-  color: #1abc9c;
+  color: #e8cc4c;
 }
 #mainNav .navbar-nav li.nav-item a.nav-link:active, #mainNav .navbar-nav li.nav-item a.nav-link:focus {
   color: #fff;
