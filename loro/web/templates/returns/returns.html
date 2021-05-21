@@ -1,15 +1,51 @@
-{% extends 'base_returns.html' %}
+{% extends 'returns/base_returns.html' %}
 
 {% block interactions %}
 
-<ul id="returns">
+<div class="row">
     {% for return_ in returns %}
-        <li>
-            <h4 style="color:green">
-                {{ return_.tag }}:{{ return_.content }}
-            </h4>
-        </li>
+        <div class="col-sm-4">
+            <div class="card">
+                <h4 class="card-header" style="color:green">{{ return_.tag }}</h4>
+                <div class="card-body">
+                    <div class="container">
+                        
+                        <div class="row justify-content-start">
+                          <div class="col-auto">
+                            <h5 class="card-text" style="color:green">
+                                {{ return_.content }}
+                            </h5>
+                          </div>
+
+                        </div><br>
+                        
+                        <!-- Buttons-->
+                        <div class="row justify-content-end">
+                            
+                            <!-- Edit-->
+                            <div class="col-auto">
+                                <a href="https://gitlab.com/marcusmello">
+                                    <span class="fas fa-edit" data-toggle="tooltip" title="Editar"></span>
+                                </a>
+                            </div>
+                            
+                            <!-- Delete-->
+                            <div class="col-auto">
+                                <a href="https://gitlab.com/marcusmello">
+                                    <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
+                                </a>
+                            </div>
+                        
+                        </div>
+                      </div>
+                
+                </div>
+            </div>
+            <br>
+        </div>
     {% endfor %}
-</ul>
+</div>
 
 {% endblock %}
+
+
