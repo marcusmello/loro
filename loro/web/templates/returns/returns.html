@@ -22,16 +22,16 @@
                         <!-- Buttons-->
                         <div class="row justify-content-end">
                             
-                            <!-- Edit-->
+                            <!-- Edit button-->
                             <div class="col-auto">
-                                <a href="https://gitlab.com/marcusmello">
+                                <a href="http://localhost:8000/returns/update/{{ return_.tag }}">
                                     <span class="fas fa-edit" data-toggle="tooltip" title="Editar"></span>
                                 </a>
                             </div>
                             
-                            <!-- Delete-->
+                            <!-- Delete button-->
                             <div class="col-auto">
-                                <a href="https://gitlab.com/marcusmello">
+                                <a href="#" data-toggle="modal" data-target="#confirmDelete" data-url="/returns/delete?tag={{ return_.tag }}">
                                     <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
                                 </a>
                             </div>
@@ -43,8 +43,11 @@
             </div>
             <br>
         </div>
+
     {% endfor %}
 </div>
+
+{% include 'returns/delete_confirmation.html' %}
 
 {% endblock %}
 
