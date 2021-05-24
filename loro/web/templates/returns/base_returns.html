@@ -1,10 +1,10 @@
-{% extends 'base.html' %}
+{% extends 'page_template.html' %}
 
 <!-- Page title-->
 {% block title%} Retornos {% endblock %}
 
 <!-- returns block-->
-{% block content%}
+{% block page_content %}
 <div class="container">
     <div class="row justify-content-evenly">
         <div class="col-auto me-auto">
@@ -14,7 +14,7 @@
         </div>
                 
         <div class="col-auto">
-            <button type="button" class="btn btn-outline-primary">Adicionar retorno</button>
+            <a href="/returns/create" class="btn btn-outline-primary">Adicionar retorno</a>
         </div>
     </div>
 
@@ -26,6 +26,5 @@
 <div class="container">
     {% block interactions %} {% endblock %}
 </div>
-
 
 {% endblock %}
