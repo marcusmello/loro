@@ -1974,7 +1974,7 @@ pre code {
   color: #495057;
   background-color: #fff;
   background-clip: padding-box;
-  border: 0.125rem solid #ced4da;
+  border: 0.125rem solid rgb(76, 187, 76);
   border-radius: 0.5rem;
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
@@ -1994,7 +1994,7 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #6bebd1;
+  border-color: rgb(76, 187, 76);
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(26, 188, 156, 0.25);
 }
@@ -5508,6 +5508,8 @@ a.close.disabled {
   border-bottom: 0 solid #dee2e6;
   border-top-left-radius: 0.75rem;
   border-top-right-radius: 0.75rem;
+  background-color: rgb(76, 187, 76);
+  color: white;
 }
 .modal-header .close {
   padding: 1rem 1rem;
