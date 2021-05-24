@@ -44,7 +44,7 @@ class Dialog(db.Entity, AttributeUpdater):
 
 
 class Return(db.Entity, AttributeUpdater):
-    tag = Required(str, unique=True)
+    tag = Required(str)
     content = Required(str)
 
 
