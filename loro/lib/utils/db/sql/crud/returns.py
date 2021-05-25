@@ -1,37 +1,43 @@
 # pylint: skip-file
+from typing import List
 from loro.lib.utils import schemas
-from loro.lib.utils.db.sql import models
+from loro.lib.utils.db.sql.models import Return
 from pony.orm import db_session
 
 
 @db_session
-def create(return_: schemas.Return):
-    _return = models.Return(tag=return_.tag, content=return_.content)
+def create(return_: schemas.Return) -> dict:
+    _return = Return(tag=return_.tag, content=return_.content)
     return _return.to_dict()
 
+
 @db_session
-def read(tag: str):
+def read(tag: str) -> dict:
     try:
-        return_in_db = models.Return.get(tag=tag)
+        return_in_db = Return.get(tag=tag)
         return return_in_db.to_dict()
     except:
         return dict()
 
+
 @db_session
-def update(tag: str, new_return: schemas.Return):
-    return_in_db = models.Return.get(tag=tag)
+def update(tag: str, new_return: schemas.Return) -> dict:
+    return_in_db = Return.get(tag=tag)
     return_in_db.update(**new_return.dict())
     return return_in_db.to_dict()
 
-@db_session
-def delete(tag: str):
-    return_in_db = models.Return.get(tag=tag)
-    return_in_db.delete()
-    return dict(tag="", content= "")
 
 @db_session
-def get(limit: int):
+def delete(tag: str) -> dict:
+    return_in_db = Return.get(tag=tag)
+    return_in_db.delete()
+    return dict(tag="", content="")
+
+
+@db_session
+def get(limit: int) -> List[dict]:
     try:
-        return [r.to_dict() for r in models.Return.select()[:limit]]
+        returns = Return.select().order_by((Return.tag))[:limit]
+        return [r.to_dict() for r in returns]
     except:
-        return dict()
+        return [dict()]
