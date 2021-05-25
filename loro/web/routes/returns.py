@@ -77,6 +77,7 @@ def update(
     new_tag: str = Form(...),
     new_content: str = Form(...),
 ):
+    new_return = schemas.Return(tag=new_tag, content=new_content)
     if new_tag != tag:
         tag_already_exists = returns.read(tag=new_tag)
         if tag_already_exists:
@@ -88,11 +89,11 @@ def update(
                     "existent_tag": True,
                     "tag": tag,
                     "new_tag": new_tag,
-                    "current_return": current_return,
+                    "current_return": new_return,
                 },
             )
 
-    new_return = schemas.Return(tag=new_tag, content=new_content)
+    
     returns.update(tag=tag, new_return=new_return)
 
     return RedirectResponse(
