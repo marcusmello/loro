@@ -14,6 +14,7 @@ from pony.orm import (
     PrimaryKey,
     Required,
     Set,
+    StrArray,
     commit,
     sql_debug,
 )
@@ -30,16 +31,16 @@ class AttributeUpdater(object):
             commit()
 
 
-class Choice(db.Entity, AttributeUpdater):
-    dialog = Optional(lambda: Dialog)
-    text = Required(LongStr)
-    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
+# class Choice(db.Entity, AttributeUpdater):
+#    dialog = Optional(lambda: Dialog)
+#    text = Required(LongStr)
+#    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
 
 
 class Dialog(db.Entity, AttributeUpdater):
     tag = Required(str, unique=True)
     header = Required(LongStr)
-    choices = Set(Choice, cascade_delete=True)
+    choices = Optional(StrArray)
     leads_to = Optional(str)  # Interaction (Dialog or Return) tag
 
 
