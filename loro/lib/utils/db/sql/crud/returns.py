@@ -7,7 +7,7 @@ from pony.orm import db_session
 
 @db_session
 def create(return_: schemas.Return) -> dict:
-    _return = Return(tag=return_.tag, content=return_.content)
+    _return = Return(**return_.dict())
     return _return.to_dict()
 
 
@@ -31,7 +31,7 @@ def update(tag: str, new_return: schemas.Return) -> dict:
 def delete(tag: str) -> dict:
     return_in_db = Return.get(tag=tag)
     return_in_db.delete()
-    return dict(tag="", content="")
+    return dict(delete="ok")
 
 
 @db_session
