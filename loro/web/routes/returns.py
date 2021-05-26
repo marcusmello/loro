@@ -66,6 +66,7 @@ def update(request: Request, tag: str):
             "tag": tag,
             "new_tag": "",
             "current_return": current_return,
+            "new_return": current_return,
         },
     )
 
@@ -89,7 +90,8 @@ def update(
                     "existent_tag": True,
                     "tag": tag,
                     "new_tag": new_tag,
-                    "current_return": new_return,
+            "current_return": current_return,
+            "new_return": new_return,
                 },
             )
 
