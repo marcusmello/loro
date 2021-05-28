@@ -3,13 +3,15 @@ from fastapi import FastAPI
 
 from loro.api.api_v1.api import api_router
 from loro.core.config import settings
-from loro.web.routes import router
+from loro.web.pages import router
 from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost",
     "http://localhost:8000/returns",
     "http://localhost:8000/returns/create",
+    "http://localhost:8000/dialogs",
+    "http://localhost:8000/dialogs/create",
     "http://localhost:8000",
     "http://0.0.0.0:8000",
     "http://127.0.0.1:8000",
