@@ -7,6 +7,8 @@
 <div class="container">
     <h4 style="color:green">Novo Retorno</h4><br>
 
+    <p style="color: lightcoral"> (* Campos obrigatórios)</p>
+
     {% if existent_tag %}
     <h5 style="color: lightcoral">
         A tag "{{ tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
@@ -20,10 +22,12 @@
             <div class="col-3">
                 <label for="tag" class="col-form-label">
                     <h6 style="color:green">
-                        Tag
+                        *Tag
                     </h6>
                 </label>
-                <input type="text" class="form-control" name="tag" id="tag" placeholder="Identificador do retorno">
+
+                <input type="text" class="{{ formInputClass }}" name="tag" id="tag"
+                    placeholder="Identificador do retorno" value="{{ tag }}">
             </div>
 
         </div> <br>
@@ -33,10 +37,12 @@
             <div class="col-6">
                 <label for="content" class="col-form-label">
                     <h6 style="color:green">
-                        Conteúdo
+                        *Conteúdo
                     </h6>
                 </label>
-                <textarea class="form-control" name="content" id="content" placeholder="Conteúdo retornado, como um link"></textarea>
+
+                <textarea class="form-control" name="content" id="content"
+                    placeholder="Conteúdo retornado, como um link">{{ content }}</textarea>
             </div>
 
         </div>
