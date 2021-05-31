@@ -1,0 +1,140 @@
+{% extends 'page_template.html' %}
+
+<!-- Page title-->
+{% block title%} Novo {% endblock %}
+
+{% block page_content %}
+
+<div class="container">
+    <h4>Novo Diálogo</h4><br>
+
+    <p style="color: var(--red-danger)"> (* Campos obrigatórios)</p>
+
+    {% if not formControl.is_valid %}
+    <h5 style="color: lightcoral">
+        A tag "{{ dialog.tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
+    </h5><br>
+    {% endif %}
+
+    <div class="form-group">
+        <form name="dynamicChoicesForm" id="dynamicChoicesForm">
+
+            <!-- this answer tag-->
+            <div class="row">
+                <div class="col-3">
+                    <label for="tag" class="col-form-label">
+                        <h6>
+                            *Tag
+                        </h6>
+                    </label>
+
+                    <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
+                        placeholder="Identificador da resposta" value="{{ dialog.tag }}">
+                </div>
+            </div> <br>
+
+            <!-- Answer header-->
+            <div class="row">
+                <div class="col-6">
+                    <label for="content" class="col-form-label">
+                        <h6>
+                            *Cabeçalho
+                        </h6>
+                    </label>
+
+                    <textarea class="form-control" name="header" id="header"
+                        placeholder="Cabeçalho da resposta">{{ dialog.header}}</textarea>
+                </div>
+            </div><br>
+
+            <!-- "leads_to" Tag-->
+            <div class="row">
+                <div class="col-6">
+                    <label for="content" class="col-form-label">
+                        <h6>
+                            Tag Seguinte
+                        </h6>
+                    </label>
+                    {{ dialogLeadsToTagSelector|safe }}
+                </div>
+            </div><br><br>
+
+            <!-- Choices Menu-->
+            <div class="table-responsive">
+                <table class="table table-borderless" id="dynamic_field">
+                    <h6>
+                        Menu de Opções
+                    </h6>
+                    <tr>
+                        {{ choicesAlreadyFilled|safe }}
+                    </tr>
+                </table>
+                <td>
+                    <button type="button" name="add" id="add" class="btn btn-success">Adicionar Opção</button>
+                </td>
+
+                <input type="button" name="submit" id="submit" class="btn btn-info" value="Salvar Diálogo" />
+            </div>
+
+        </form>
+    </div>
+</div>
+
+<!-- Bootstrap core JS-->
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+        var i = `{{ dynamicFieldStartIndex|int }}`;
+        var postURL = `{{ postURL }}`;
+        var successReturnURL = `{{ successReturnURL }}`;
+        var errorReturnURL = `{{ errorReturnURL }}`;
+        var choiceTextInput = `{{ choiceTextInput|tojson }}`;
+        var choiceTagSelector = `{{ choiceTagSelector|tojson }}`;
+
+        $('#add').click(function () {
+            i++;
+            var removeButton = '"<td><button type="button" name="remove" id="' +
+                i +
+                '" class="btn btn-danger btn_remove">' +
+                '<span class="fa fa-trash" data-toggle="tooltip" title="Excluir">' +
+                '</span></button></td></tr>';
+
+            var htmlToAppend = '<tr id="row' +
+                i +
+                '" class="dynamic-added">"' +
+                choiceTextInput +
+                choiceTagSelector +
+                removeButton;
+
+            $('#dynamic_field').append(htmlToAppend);
+        });
+
+        $(document).on('click', '.btn_remove', function () {
+            var button_id = $(this).attr("id");
+            $('#row' + button_id + '').remove();
+        });
+
+        $('#submit').click(function () {
+            var serializedData = $('#dynamicChoicesForm').serialize();
+            $.ajax({
+                url: postURL,
+                method: "post",
+                data: serializedData,
+                type: 'json',
+                success: function (data) {
+                    window.location.href = successReturnURL;
+                },
+                error: function (data) {
+                    window.location.href = errorReturnURL +
+                        '/' +
+                        serializedData;
+                }
+            });
+        });
+
+    });
+</script>
+{% endblock %}
