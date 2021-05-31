@@ -1,0 +1,30 @@
+{% extends 'page_template.html' %}
+
+<!-- Page title-->
+{% block title%} Diálogos {% endblock %}
+
+<!-- dialogs block-->
+{% block page_content %}
+<div class="container">
+    <div class="row justify-content-evenly">
+        <div class="col-auto me-auto">
+            <h2 style="color:green">
+                Diálogos
+            </h2>
+        </div>
+                
+        <div class="col-auto">
+            <a href="/dialogs/create" class="btn btn-outline-primary">Adicionar diálogo</a>
+        </div>
+    </div>
+
+</div>
+
+<br>
+<br>
+
+<div class="container">
+    {% block interactions %} {% endblock %}
+</div>
+
+{% endblock %}
