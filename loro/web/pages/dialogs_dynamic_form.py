@@ -169,13 +169,12 @@ class DynamicForm:
             html="".join(filled_choices), index=len(filled_choices) + 1
         )
 
-
     @staticmethod
     def _common_context():
         context = CommonContext()
         context.refresh_tag_selector()
         return context
-    
+
     def empty_create(self, request: Request) -> dict:
         context = self._common_context()
         return {**context.dict(), **dict(request=request)}
