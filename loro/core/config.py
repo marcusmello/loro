@@ -36,8 +36,8 @@ class SqliteDatabase(BaseModel):
 
 
 class MemorySqliteDatabase(BaseModel):
-    provider: str ='sqlite'
-    filename:str =':memory:'
+    provider: str = "sqlite"
+    filename: str = ":memory:"
 
 
 def get_relational_database(
@@ -47,13 +47,49 @@ def get_relational_database(
     return getattr(thismodule, "{}Database".format(provider.capitalize()))()
 
 
+class RestPath(BaseModel):
+    root: str
+    create: str = str()
+    create_error = str()
+    read: str = str()
+    update: str = str()
+    delete: str = str()
+
+    def generate(self):
+        self.create = "{}/create".format(self.root)
+        self.create_error = "{}/create-error".format(self.root)
+        self.read = self.root
+        self.update = "{}/update/".format(self.root)
+        self.delete = self.root
+
+
+dialogs_paths = RestPath(root="/dialogs")
+dialogs_paths.generate()
+
+
+class UrlPaths(BaseModel):
+    dialogs = dialogs_paths
+
+
+class DialogsDynamicFormVariables(BaseModel):
+    default_empty_tag: str = "Tag Seguinte"
+
+
+class WebTemplatingVariables(BaseModel):
+    dialogs_dynamic_forms = DialogsDynamicFormVariables()
+
+
 class Settings(BaseSettings):
+    class Config:
+        arbitrary_types_allowed = True
+
     API_V1_STR: str = "/api/v1"
-    #domain: str = env.str("DOMAIN", default="test")
     relational_database: BaseModel = get_relational_database(
         provider=env.str("RELATIONAL_DATABASE_PROVIDER", default="sqlite")
     )
     sql_debug: bool = False
+    url_paths = UrlPaths()
+    web_templating_variables = WebTemplatingVariables()
 
 
 settings = Settings()
