@@ -42,3 +42,9 @@ class Message(BaseModel):
 class FinalClient(BaseModel):
     id: int
     messages: List[Message]
+
+EMPTY_DIALOG = Dialog(
+    tag=str(),
+    header=str(),
+    choices=list(), 
+)
