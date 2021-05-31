@@ -1,19 +1,28 @@
-from loro.lib.utils import schemas
+from loro.core.config import settings
+
+# from loro.lib.utils import schemas
 from loro.lib.utils.db.sql.crud import dialogs
 
-from .dialogs_dynamic_fields_form import CHOICE_INPUT
+from .dialogs_dynamic_form import (
+    DynamicForm,
+    ParseForm,
+)
 from .router import (
-    Form,
     HTMLResponse,
-    RedirectResponse,
+    # RedirectResponse,
     Request,
     app,
-    status,
+    # status,
     templates,
+    HTTPException,
 )
 
+paths = settings.url_paths.dialogs
+dynamic_form = DynamicForm()
+parse_form = ParseForm()
 
-@app.get("/dialogs", response_class=HTMLResponse)
+
+@app.get(paths.root, response_class=HTMLResponse)
 def get(request: Request, limit: int = 100):
     dialogs_in_db = dialogs.get_dialogs(limit=limit)
 
@@ -28,41 +37,31 @@ def get(request: Request, limit: int = 100):
     )
 
 
-@app.get("/dialogs/create", response_class=HTMLResponse)
+@app.get(paths.create, response_class=HTMLResponse)
 def create(request: Request):
     return templates.TemplateResponse(
-        "dialogs/create_form.html",
-        context={
-            "request": request,
-            "existent_tag": False,
-            "tag": "",
-            "formInputClass": "form-control",
-            "content": "",
-            "choiceInput": CHOICE_INPUT,
-        },
+        "dialogs/dynamic_form.html",
+        context=dynamic_form.empty_create(request),
     )
 
 
-@app.post("/dialogs/create")
+@app.post(paths.create)
 async def create(request: Request):
-    # tag_already_exists = returns.read(tag=tag)
-    # if tag_already_exists:
-    #    return templates.TemplateResponse(
-    #        "returns/create_form.html",
-    #        context={"request": request, "existent_tag": True, "tag": tag},
-    #    )
-
-    # return_ = schemas.Return(tag=tag, content=content)
-    # returns.create(return_)
-
-    # return RedirectResponse(
-    #    url="/returns", status_code=status.HTTP_303_SEE_OTHER
-    # )
     form = await request.form()
+    dialog = parse_form.from_raw_form(dialog_form=form.multi_items())
 
-    for item in form.multi_items():
-        print(item[1])
+    tag_already_exists = dialogs.read_dialog(tag=dialog.tag)
+    if tag_already_exists:
+        raise HTTPException(status_code=400)
 
-    # return RedirectResponse(
-    #    url="/dialogs", status_code=status.HTTP_303_SEE_OTHER
-    # )
+    dialogs.create_dialog(dialog)
+
+
+@app.get(path=paths.create_error + "/{data}")
+def invalid_create(request: Request, data: str):
+    dialog = parse_form.from_raw_invalid_input(data=data)
+
+    return templates.TemplateResponse(
+        "dialogs/dynamic_form.html",
+        context=dynamic_form.invalid_create(request, dialog),
+    )
