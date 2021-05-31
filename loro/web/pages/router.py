@@ -2,7 +2,7 @@
 # pylint:disable=missing-module-docstring
 # pylint:disable=unused-import
 
-from fastapi import FastAPI, Form, Request, status
+from fastapi import FastAPI, Form, Request, status, HTTPException
 from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
