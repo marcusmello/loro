@@ -2,7 +2,7 @@ import json
 from typing import List, Union
 from loro.lib.utils import schemas
 from loro.lib.utils.db.sql.models import Dialog
-from pony.orm import db_session
+from pony.orm import db_session, select
 
 
 def dialog_schema(dialog: Dialog) -> schemas.Dialog:
@@ -61,3 +61,10 @@ def get_dialogs(limit: int) -> List[Union[dict, schemas.Dialog]]:
         return [dialog_schema(dialog) for dialog in dialogs]
     except:
         return [dict()]
+
+@db_session
+def get_all_dialogs_tags() -> List[str]:
+    try:
+        return list(select(dialog.tag for dialog in Dialog))
+    except:
+        return list()
