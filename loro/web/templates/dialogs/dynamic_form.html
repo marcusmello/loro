@@ -1,17 +1,24 @@
 {% extends 'page_template.html' %}
 
 <!-- Page title-->
-{% block title%} Novo {% endblock %}
+{% block title%} {{ blockTitle }} {% endblock %}
 
 {% block page_content %}
 
 <div class="container">
+
+    <!-- Dynamic page headline-->
+    {% if update %}
+    <h4>Atualizar diálogo: <i>{{ originTag }}</i> </h4><br>
+
+    {% else %}
     <h4>Novo Diálogo</h4><br>
 
+    {% endif %}
     <p style="color: var(--red-danger)"> (* Campos obrigatórios)</p>
 
     {% if not formControl.is_valid %}
-    <h5 style="color: lightcoral">
+    <h5 style="color: var(--red-danger)">
         A tag "{{ dialog.tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
     </h5><br>
     {% endif %}
@@ -42,8 +49,8 @@
                         </h6>
                     </label>
 
-                    <textarea class="form-control" name="header" id="header"
-                        placeholder="Cabeçalho da resposta">{{ dialog.header}}</textarea>
+                    <textarea class="form-control" name="header" id="header" placeholder="Cabeçalho da resposta"
+                        required>{{ dialog.header}}</textarea>
                 </div>
             </div><br>
 
@@ -127,14 +134,21 @@
                 success: function (data) {
                     window.location.href = successReturnURL;
                 },
-                error: function (data) {
-                    window.location.href = errorReturnURL +
-                        '/' +
-                        serializedData;
+                error: function (xhr, ajaxOptions, thrownError, data) {
+                    switch (xhr.status) {
+                        case 502:
+                            alert('Por gentileza, preencher os campos obrigatórios');
+                            break;
+
+                        case 403:
+                            window.location.href = errorReturnURL +
+                                '/' +
+                                serializedData;
+                            break;
+                    }
                 }
             });
         });
-
     });
 </script>
 {% endblock %}
