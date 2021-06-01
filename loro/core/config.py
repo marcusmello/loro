@@ -53,14 +53,16 @@ class RestPath(BaseModel):
     create_error = str()
     read: str = str()
     update: str = str()
+    update_error: str = str()
     delete: str = str()
 
     def generate(self):
         self.create = "{}/create".format(self.root)
         self.create_error = "{}/create-error".format(self.root)
         self.read = self.root
-        self.update = "{}/update/".format(self.root)
-        self.delete = self.root
+        self.update = "{}/update".format(self.root)
+        self.update_error = "{}/update-error".format(self.root)
+        self.delete = "{}/delete".format(self.root)
 
 
 dialogs_paths = RestPath(root="/dialogs")
