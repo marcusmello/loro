@@ -7,7 +7,7 @@
     <div class="col-sm-4">
         <div class="card" id="{{ dialog.tag }}">
 
-            <!-- Cabeçalho do card-->
+            <!-- Main Card Head-->
             <div class="card-header text-white" style="background-color: var(--green)">
                 <div class="row justify-content-start">
                     <div class="col-1">
@@ -21,10 +21,10 @@
 
             <div class="card-body">
 
-                <!-- Cabeçalho do díalogo-->
+                <!-- Dialog Head-->
                 <h5>"{{ dialog.header }}"</h5><br>
 
-                <!-- Saida do díalogo-->
+                <!-- 'Leads to' Tag-->
                 {% if dialog.leads_to %}
                 <div class="row justify-content-start">
                     <div class="col-1">
@@ -38,12 +38,10 @@
                 </div><br>
                 {% endif %}
 
-                <!-- Escolhas-->
+                <!-- Choices-->
                 {% if dialog.choices %}
                 <div class="card">
-
                     <div class="card-body">
-
                         <ul class="list-group list-group-flush">
                             {% for choice in dialog.choices %}
 
@@ -82,7 +80,8 @@
                     <!-- Delete button-->
                     <div class="col-auto">
                         <a href="#" data-toggle="modal" data-target="#confirmDelete"
-                            data-url="/dialogs/delete?tag={{ dialog.tag }}">
+                            data-url="/dialogs/delete/{{ dialog.tag }}"
+                            data-tag="{{ dialog.tag }}">
                             <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
                         </a>
                     </div>
@@ -95,6 +94,6 @@
     {% endfor %}
 </div>
 
-{% include 'returns/delete_confirmation.html' %}
+{% include 'dialogs/delete_confirmation.html' %}
 
 {% endblock %}
