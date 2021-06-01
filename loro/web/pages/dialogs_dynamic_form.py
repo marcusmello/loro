@@ -51,6 +51,7 @@ def choice_text_input(default=str()) -> str:
 
 
 def tag_selector(selected_tag=DEFAULT_EMPTY_TAG) -> str:
+    # Look at https://getbootstrap.com/docs/5.0/forms/form-control/#datalists
     selector_template = """
         <td>
             <select class="form-control" name="choiceTag" 
@@ -86,6 +87,9 @@ def remove_button(index: int) -> str:
 
 
 class CommonContext(BaseModel):
+    originTag: str = str()
+    blockTitle: str = "Novo"
+    update = False
     choicesAlreadyFilled: str = str()
     dynamicFieldStartIndex: int = 1
     postURL: str = paths.create
@@ -137,7 +141,7 @@ class ParseForm:
         )
 
 
-class DynamicForm:
+class DynamicContext:
     @staticmethod
     def _filled(choice: schemas.Choice, index: int) -> str:
         choice_text = choice_text_input(default=choice.text)
@@ -175,19 +179,47 @@ class DynamicForm:
         context.refresh_tag_selector()
         return context
 
-    def empty_create(self, request: Request) -> dict:
+    def default_create(self, request: Request) -> dict:
         context = self._common_context()
         return {**context.dict(), **dict(request=request)}
 
-    def invalid_create(self, request: Request, dialog: schemas.Dialog) -> dict:
+    def _filled_context(self, dialog:schemas.Dialog)-> CommonContext:
         already_filled_choices = self._already_filled(choices=dialog.choices)
         context = self._common_context()
 
         context.choicesAlreadyFilled = already_filled_choices.html
         context.dynamicFieldStartIndex = already_filled_choices.index
         context.dialog = dialog
-        context.formControl = InvalidForm()
         context.dialogLeadsToTagSelector = tag_selector(
             selected_tag=dialog.leads_to
         )
+        return context
+    
+    def invalid_create(self, request: Request, dialog: schemas.Dialog) -> dict:
+        context = self._filled_context(dialog)
+        context.formControl = InvalidForm()
+        return {**context.dict(), **dict(request=request)}
+
+    def _update_context(self, tag: str, dialog: schemas.Dialog) -> CommonContext:
+        context = self._filled_context(dialog)
+        context.blockTitle = "Atualizar"
+        context.update = True
+        context.postURL = paths.update + "/{}/".format(tag)
+        context.errorReturnURL = paths.update_error + "/{}".format(tag)
+        context.originTag = tag
+        return context    
+    
+    def default_update(
+        self, request: Request, tag: str, dialog: schemas.Dialog
+    ) -> dict:
+
+        context = self._update_context(tag, dialog)
+        return {**context.dict(), **dict(request=request)}
+    
+    def invalid_update(
+        self, request: Request, tag: str, dialog: schemas.Dialog
+    ) -> dict:
+
+        context = self._update_context(tag, dialog)
+        context.formControl = InvalidForm()
         return {**context.dict(), **dict(request=request)}
