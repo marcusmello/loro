@@ -77,13 +77,17 @@
 })(jQuery); // End of use strict
 
 // Modal interaction with dynamic href button
-$(document).ready(function(){
-    $("#confirmDelete").on("show.bs.modal", function(event){
+
+$(document).ready(function () {
+    $("#confirmDelete").on("show.bs.modal", function (event) {
         // Get the button that triggered the modal
         var button = $(event.relatedTarget);
 
         // Extract value from the custom data-* attribute
+        var tag = button.data("tag");
         var url = button.data("url");
+
+        $("#tag").html(tag);
         $(this).find('#confirm-delete').attr('href', url)
     });
 });
