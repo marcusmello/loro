@@ -1,6 +1,11 @@
 # Dev/environment
 .vscode/
 BKP_*
+jupyterlog
+DEPRECATED_*
+*.ipynb
+database.sqlite
+DEV_*
 
 
 # Byte-compiled / optimized / DLL files
@@ -19,7 +24,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/

@@ -1,0 +1,81 @@
+{% extends 'page_template.html' %}
+
+<!-- Page title-->
+{% block title%} Editar {% endblock %}
+
+{% block page_content %}
+<div class="container">
+    <h4 style="color:green">Editar Retorno</h4><br>
+
+    <p style="color: lightcoral"> (* Campos obrigatórios)</p>
+
+    <div class="row">
+
+        <div class="col-3">
+            <label for="tag" class="col-form-label">
+                <h6 style="color:green">
+                    Tag
+                </h6>
+            </label>
+            <input type="text" class="form-control" name="new_tag" id="new_tag" placeholder="{{ current_return.tag }}"
+                disabled>
+        </div>
+
+    </div> <br>
+
+    <div class="row">
+
+        <div class="col-6">
+            <label for="content" class="col-form-label">
+                <h6 style="color:green">
+                    Conteúdo
+                </h6>
+            </label>
+            <textarea class="form-control" name="new_content" id="new_content"
+                placeholder="{{ current_return.content }}" disabled></textarea>
+        </div>
+
+    </div> <br>
+
+    {% if existent_tag %}
+    <h5 style="color: lightcoral">
+        A tag "{{ new_tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
+    </h5><br>
+    {% endif %}
+
+    <form action="http://localhost:8000/returns/update/{{ tag }}" method="post">
+
+        <div class="row">
+
+            <div class="col-3">
+                <label for="tag" class="col-form-label">
+                    <h6 style="color:green">
+                        *Nova Tag
+                    </h6>
+                </label>
+                <input type="text" class="{{ formInputClass }}" name="new_tag" id="new_tag" value="{{ new_return.tag }}">
+            </div>
+
+        </div> <br>
+
+        <div class="row">
+
+            <div class="col-6">
+                <label for="content" class="col-form-label">
+                    <h6 style="color:green">
+                        *Novo Conteúdo
+                    </h6>
+                </label>
+                <textarea class="form-control" name="new_content"
+                    id="new_content">{{ new_return.content }}</textarea>
+            </div>
+
+        </div>
+        <br><br>
+        <div class="mb-3">
+            <button type="submit" class="btn btn-outline-primary">Confirmar</button>
+        </div>
+
+    </form>
+</div>
+{% endblock %}

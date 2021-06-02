@@ -1,0 +1,54 @@
+{% extends 'returns/base_returns.html' %}
+
+{% block interactions %}
+
+<div class="row">
+    {% for return_ in returns %}
+    <div class="col-sm-4">
+        <div class="card">
+
+            <div class="card-header text-white" style="background-color: #28a745">
+                <h4>{{ return_.tag }}</h4>
+            </div>
+
+            <div class="card-body">
+               
+
+                    <div class="row justify-content-start">
+                        <div class="col-auto">
+                            <h5 class="card-text" style="color:green">
+                                {{ return_.content }}
+                            </h5>
+                        </div>
+
+                    </div><br>
+
+                    <!-- Buttons-->
+                    <div class="row justify-content-end">
+
+                        <!-- Edit button-->
+                        <div class="col-auto">
+                            <a href="http://localhost:8000/returns/update/{{ return_.tag }}">
+                                <span class="fas fa-edit" data-toggle="tooltip" title="Editar"></span>
+                            </a>
+                        </div>
+
+                        <!-- Delete button-->
+                        <div class="col-auto">
+                            <a href="#" data-toggle="modal" data-target="#confirmDelete"
+                                data-url="/returns/delete?tag={{ return_.tag }}">
+                                <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
+                            </a>
+                        </div>
+
+                    </div>
+    
+            </div>
+        </div><br>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'returns/delete_confirmation.html' %}
+
+{% endblock %}

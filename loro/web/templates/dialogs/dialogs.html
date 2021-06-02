@@ -1,0 +1,99 @@
+{% extends 'dialogs/base_dialogs.html' %}
+
+{% block interactions %}
+
+<div class="row">
+    {% for dialog in dialogs %}
+    <div class="col-sm-4">
+        <div class="card" id="{{ dialog.tag }}">
+
+            <!-- Main Card Head-->
+            <div class="card-header text-white" style="background-color: var(--green)">
+                <div class="row justify-content-start">
+                    <div class="col-1">
+                        <span class="fa fa-tags fa-xs"></span>
+                    </div>
+                    <div class="col-auto">
+                        <h5>{{ dialog.tag }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <!-- Dialog Head-->
+                <h5>"{{ dialog.header }}"</h5><br>
+
+                <!-- 'Leads to' Tag-->
+                {% if dialog.leads_to %}
+                <div class="row justify-content-start">
+                    <div class="col-1">
+                        <span style="color: var(--green-hover)" class="fa fa-tags fa-xs"></span>
+                    </div>
+                    <div class="col-auto">
+                        <h6>
+                            <a href="#{{ dialog.leads_to }}"><i>{{ dialog.leads_to }}</i></a>
+                        </h6>
+                    </div>
+                </div><br>
+                {% endif %}
+
+                <!-- Choices-->
+                {% if dialog.choices %}
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for choice in dialog.choices %}
+
+                            <li class="list-group-item" style="color:green">
+
+                                <h6>"{{ choice.text }}"</h6>
+
+                                <div class="row justify-content-start">
+                                    <div class="col-1">
+                                        <span style="color: var(--green-hover)" class="fa fa-tags fa-xs"></span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>
+                                            <a href="#{{ choice.leads_to }}"><i>{{ choice.leads_to }}</i></a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div><br>
+                {% endif %}
+
+                <!-- Buttons-->
+                <div class="row justify-content-end">
+
+                    <!-- Edit button-->
+                    <div class="col-auto">
+                        <a href="/dialogs/update/{{ dialog.tag }}">
+                            <span class="fas fa-edit" data-toggle="tooltip" title="Editar"></span>
+                        </a>
+                    </div>
+
+                    <!-- Delete button-->
+                    <div class="col-auto">
+                        <a href="#" data-toggle="modal" data-target="#confirmDelete"
+                            data-url="/dialogs/delete/{{ dialog.tag }}"
+                            data-tag="{{ dialog.tag }}">
+                            <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div><br>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'dialogs/delete_confirmation.html' %}
+
+{% endblock %}
