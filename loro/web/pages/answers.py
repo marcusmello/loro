@@ -1,9 +1,9 @@
 from loro.core.config import settings
 
 # from loro.lib.utils import schemas
-from loro.lib.utils.db.sql.crud import dialogs
+from loro.lib.utils.db.sql.crud import answers
 
-from .dialogs_dynamic_form import (
+from .answers_dynamic_form import (
     DynamicContext,
     ParseForm,
 )
@@ -17,25 +17,25 @@ from .router import (
     HTTPException,
 )
 
-paths = settings.url_paths.dialogs
+paths = settings.url_paths.answers
 
-DYNAMIC_FORM = "dialogs/dynamic_form.html"
+DYNAMIC_FORM = "answers/dynamic_form.html"
 dynamic_context = DynamicContext()
 parse_form = ParseForm()
 
 
 @app.get(paths.root, response_class=HTMLResponse)
 def get(request: Request, limit: int = 100):
-    dialogs_in_db = dialogs.get_dialogs(limit=limit)
+    answers_in_db = answers.get_collection(limit=limit)
 
-    if dialogs_in_db:
+    if answers_in_db:
         return templates.TemplateResponse(
-            "dialogs/dialogs.html",
-            context={"request": request, "dialogs": dialogs_in_db},
+            "answers/answers.html",
+            context={"request": request, "answers": answers_in_db},
         )
 
     return templates.TemplateResponse(
-        "dialogs/not_found.html", context={"request": request}
+        "answers/not_found.html", context={"request": request}
     )
 
 
@@ -50,62 +50,62 @@ def create(request: Request):
 @app.post(paths.create)
 async def create(request: Request):
     form = await request.form()
-    dialog = parse_form.from_raw_form(dialog_form=form.multi_items())
+    answer = parse_form.from_raw_form(answer_form=form.multi_items())
 
-    if not (dialog.tag and dialog.header):
+    if not (answer.tag and answer.header):
         raise HTTPException(status_code=502)
 
-    tag_already_exists = dialogs.read_dialog(tag=dialog.tag)
+    tag_already_exists = answers.read(tag=answer.tag)
     if tag_already_exists:
         raise HTTPException(status_code=403)
 
-    dialogs.create_dialog(dialog)
+    answers.create(answer)
 
 
 @app.get(path=paths.create_error + "/{data}")
 def invalid_create(request: Request, data: str):
-    dialog = parse_form.from_raw_invalid_input(data=data)
+    answers = parse_form.from_raw_invalid_input(data=data)
 
     return templates.TemplateResponse(
         DYNAMIC_FORM,
-        context=dynamic_context.invalid_create(request, dialog),
+        context=dynamic_context.invalid_create(request, answers),
     )
 
 @app.get(path=paths.update + "/{tag}", response_class=HTMLResponse)
 def update(request: Request, tag:str):
-    dialog_to_update = dialogs.read_dialog(tag=tag)
+    answer_to_update = answers.read(tag=tag)
 
     return templates.TemplateResponse(
         DYNAMIC_FORM,
-        context=dynamic_context.default_update(request, tag, dialog_to_update),
+        context=dynamic_context.default_update(request, tag, answer_to_update),
     )
 
 @app.post(path=paths.update + "/{tag}")
 async def update(request: Request, tag:str):
     form = await request.form()
-    new_dialog = parse_form.from_raw_form(dialog_form=form.multi_items())
+    new_answers = parse_form.from_raw_form(answer_form=form.multi_items())
 
-    if not (new_dialog.tag and new_dialog.header):
+    if not (new_answers.tag and new_answers.header):
         raise HTTPException(status_code=502)
 
-    if new_dialog.tag != tag:
-        tag_already_exists = dialogs.read_dialog(tag=new_dialog.tag)
+    if new_answers.tag != tag:
+        tag_already_exists = answers.read(tag=new_answers.tag)
         if tag_already_exists:
             raise HTTPException(status_code=403)
 
-    dialogs.update_dialog(tag=tag, new_dialog=new_dialog)
+    answers.update(tag=tag, new_answer=new_answers)
 
 
 @app.get(path=paths.update_error + "/{tag}/{data}")
 def invalid_update(request: Request, tag: str, data: str):
-    dialog_to_update = parse_form.from_raw_invalid_input(data=data)
+    answer_to_update = parse_form.from_raw_invalid_input(data=data)
 
     return templates.TemplateResponse(
         DYNAMIC_FORM,
-        context=dynamic_context.invalid_update(request, tag, dialog_to_update),
+        context=dynamic_context.invalid_update(request, tag, answer_to_update),
     )
 
 @app.get(path=paths.delete + "/{tag}", response_class=HTMLResponse)
 def delete(tag: str):
-    dialogs.delete_dialog(tag=tag)
+    answers.delete(tag=tag)
     return RedirectResponse(url=paths.root, status_code=status.HTTP_303_SEE_OTHER)

@@ -12,19 +12,15 @@ MESSAGES_DIRECTIONS = [
 
 class Choice(BaseModel):
     text: str
-    leads_to: str = str() # Interaction (Dialog or Return) tag
+    leads_to: str = str() # Answer tag
 
 
-class Return(BaseModel):
-    tag: str
-    content: str
 
-
-class Dialog(BaseModel):
+class Answer(BaseModel):
     tag: str
     header: str
     choices: Optional[List[Choice]]
-    leads_to: str = str() # Interaction (Dialog or Return) tag
+    leads_to: str = str() # Answer tag
 
 
 class Message(BaseModel):
@@ -43,7 +39,7 @@ class FinalClient(BaseModel):
     id: int
     messages: List[Message]
 
-EMPTY_DIALOG = Dialog(
+EMPTY_ANSWER = Answer(
     tag=str(),
     header=str(),
     choices=list(), 

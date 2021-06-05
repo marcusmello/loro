@@ -65,20 +65,20 @@ class RestPath(BaseModel):
         self.delete = "{}/delete".format(self.root)
 
 
-dialogs_paths = RestPath(root="/dialogs")
-dialogs_paths.generate()
+answers_paths = RestPath(root="/answers")
+answers_paths.generate()
 
 
 class UrlPaths(BaseModel):
-    dialogs = dialogs_paths
+    answers = answers_paths
 
 
-class DialogsDynamicFormVariables(BaseModel):
+class answersDynamicFormVariables(BaseModel):
     default_empty_tag: str = "Tag Seguinte"
 
 
 class WebTemplatingVariables(BaseModel):
-    dialogs_dynamic_forms = DialogsDynamicFormVariables()
+    answers_dynamic_forms = answersDynamicFormVariables()
 
 
 class Settings(BaseSettings):

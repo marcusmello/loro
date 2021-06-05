@@ -8,13 +8,16 @@ from fastapi.middleware.cors import CORSMiddleware
 
 origins = [
     "http://localhost",
-    "http://localhost:8000/returns",
-    "http://localhost:8000/returns/create",
-    "http://localhost:8000/dialogs",
-    "http://localhost:8000/dialogs/create",
     "http://localhost:8000",
     "http://0.0.0.0:8000",
     "http://127.0.0.1:8000",
+    "http://localhost:8000/answers",
+    "http://localhost:8000/answers/create",
+    "http://0.0.0.0:8000/answers",
+    "http://0.0.0.0:8000/answers/create",
+    "http://127.0.0.1:8000/answers",
+    "http://127.0.0.1:8000/answers/create",
+
 ]
 
 app = FastAPI()
