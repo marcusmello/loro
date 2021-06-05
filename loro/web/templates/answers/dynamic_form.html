@@ -9,17 +9,17 @@
 
     <!-- Dynamic page headline-->
     {% if update %}
-    <h4>Atualizar diálogo: <i>{{ originTag }}</i> </h4><br>
+    <h4>Atualizar resposta: <i>{{ originTag }}</i> </h4><br>
 
     {% else %}
-    <h4>Novo Diálogo</h4><br>
+    <h4>Nova Resposta</h4><br>
 
     {% endif %}
     <p style="color: var(--red-danger)"> (* Campos obrigatórios)</p>
 
     {% if not formControl.is_valid %}
     <h5 style="color: var(--red-danger)">
-        A tag "{{ dialog.tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
+        A tag "{{ answer.tag }}" já existe; tags devem ser únicas, por gentileza, escolha outro nome para a tag.
     </h5><br>
     {% endif %}
 
@@ -36,7 +36,7 @@
                     </label>
 
                     <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
-                        placeholder="Identificador da resposta" value="{{ dialog.tag }}">
+                        placeholder="Identificador da resposta" value="{{ answer.tag }}">
                 </div>
             </div> <br>
 
@@ -50,7 +50,7 @@
                     </label>
 
                     <textarea class="form-control" name="header" id="header" placeholder="Cabeçalho da resposta"
-                        required>{{ dialog.header}}</textarea>
+                        required>{{ answer.header}}</textarea>
                 </div>
             </div><br>
 
@@ -62,7 +62,7 @@
                             Tag Seguinte
                         </h6>
                     </label>
-                    {{ dialogLeadsToTagSelector|safe }}
+                    {{ answerLeadsToTagSelector|safe }}
                 </div>
             </div><br><br>
 
@@ -80,7 +80,7 @@
                     <button type="button" name="add" id="add" class="btn btn-success">Adicionar Opção</button>
                 </td>
 
-                <input type="button" name="submit" id="submit" class="btn btn-info" value="Salvar Diálogo" />
+                <input type="button" name="submit" id="submit" class="btn btn-info" value="Salvar Resposta" />
             </div>
 
         </form>

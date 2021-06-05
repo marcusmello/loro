@@ -31,22 +31,11 @@ class AttributeUpdater(object):
             commit()
 
 
-# class Choice(db.Entity, AttributeUpdater):
-#    dialog = Optional(lambda: Dialog)
-#    text = Required(LongStr)
-#    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
-
-
-class Dialog(db.Entity, AttributeUpdater):
+class Answer(db.Entity, AttributeUpdater):
     tag = Required(str, unique=True)
     header = Required(LongStr)
     choices = Optional(StrArray)
-    leads_to = Optional(str)  # Interaction (Dialog or Return) tag
-
-
-class Return(db.Entity, AttributeUpdater):
-    tag = Required(str)
-    content = Required(str)
+    leads_to = Optional(str)  # Answer tag
 
 
 class Message(db.Entity):

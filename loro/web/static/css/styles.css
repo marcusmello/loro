@@ -5414,50 +5414,50 @@ a.close.disabled {
   outline: 0;
 }
 
-.modal-dialog {
+.modal-answer {
   position: relative;
   width: auto;
   margin: 0.5rem;
   pointer-events: none;
 }
-.modal.fade .modal-dialog {
+.modal.fade .modal-answer {
   transition: transform 0.3s ease-out;
   transform: translate(0, -50px);
 }
 @media (prefers-reduced-motion: reduce) {
-  .modal.fade .modal-dialog {
+  .modal.fade .modal-answer {
     transition: none;
   }
 }
-.modal.show .modal-dialog {
+.modal.show .modal-answer {
   transform: none;
 }
-.modal.modal-static .modal-dialog {
+.modal.modal-static .modal-answer {
   transform: scale(1.02);
 }
 
-.modal-dialog-scrollable {
+.modal-answer-scrollable {
   display: flex;
   max-height: calc(100% - 1rem);
 }
-.modal-dialog-scrollable .modal-content {
+.modal-answer-scrollable .modal-content {
   max-height: calc(100vh - 1rem);
   overflow: hidden;
 }
-.modal-dialog-scrollable .modal-header,
-.modal-dialog-scrollable .modal-footer {
+.modal-answer-scrollable .modal-header,
+.modal-answer-scrollable .modal-footer {
   flex-shrink: 0;
 }
-.modal-dialog-scrollable .modal-body {
+.modal-answer-scrollable .modal-body {
   overflow-y: auto;
 }
 
-.modal-dialog-centered {
+.modal-answer-centered {
   display: flex;
   align-items: center;
   min-height: calc(100% - 1rem);
 }
-.modal-dialog-centered::before {
+.modal-answer-centered::before {
   display: block;
   height: calc(100vh - 1rem);
   height: -webkit-min-content;
@@ -5465,15 +5465,15 @@ a.close.disabled {
   height: min-content;
   content: "";
 }
-.modal-dialog-centered.modal-dialog-scrollable {
+.modal-answer-centered.modal-answer-scrollable {
   flex-direction: column;
   justify-content: center;
   height: 100%;
 }
-.modal-dialog-centered.modal-dialog-scrollable .modal-content {
+.modal-answer-centered.modal-answer-scrollable .modal-content {
   max-height: none;
 }
-.modal-dialog-centered.modal-dialog-scrollable::before {
+.modal-answer-centered.modal-answer-scrollable::before {
   content: none;
 }
 
@@ -5556,22 +5556,22 @@ a.close.disabled {
 }
 
 @media (min-width: 576px) {
-  .modal-dialog {
+  .modal-answer {
     max-width: 500px;
     margin: 1.75rem auto;
   }
 
-  .modal-dialog-scrollable {
+  .modal-answer-scrollable {
     max-height: calc(100% - 3.5rem);
   }
-  .modal-dialog-scrollable .modal-content {
+  .modal-answer-scrollable .modal-content {
     max-height: calc(100vh - 3.5rem);
   }
 
-  .modal-dialog-centered {
+  .modal-answer-centered {
     min-height: calc(100% - 3.5rem);
   }
-  .modal-dialog-centered::before {
+  .modal-answer-centered::before {
     height: calc(100vh - 3.5rem);
     height: -webkit-min-content;
     height: -moz-min-content;

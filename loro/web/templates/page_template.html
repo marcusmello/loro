@@ -1,97 +1,108 @@
 {% extends 'base.html' %}
 
 {% block body_content %}
-    <nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
-        <div class="container">
-            <a class="navbar-brand js-scroll-trigger" href="/home">L<span style="text-decoration: overline">o</span>ro</a>
-            <button class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-                <i class="fas fa-bars"></i>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarResponsive">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/dialogs">Diálogos</a>
-                    </li>
-                    
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/returns">Retornos</a>
-                    </li>
-                    
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/clients">Clientes</a>
-                    </li>
-
-                    <li class="nav-item mx-0 mx-lg-1">
-                        <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/settings">Configurações</a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <div ng-view>
-        {% block page_content %} {% endblock %}
-    </div>
-
-    <!-- Footer-->
-    <footer class="footer text-center">
-        <div class="container">
-            <div class="row">
-
-                <!-- Footer Social Icons-->
-                <div class="col-lg-6 mb-5 mb-lg-0">
-                    <h4 class="text-uppercase mb-4"> Vintem.tech </h4>
-                    
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://vintem.tech" target="_blank">
-                        <i class="fab fa fa-globe"></i>
+<nav class="navbar navbar-expand-lg bg-secondary text-uppercase fixed-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="/home">
+            
+            <!-- stylized logo-->
+            L<span style="text-decoration: overline">o</span>ro
+        </a>
+        <button
+            class="navbar-toggler navbar-toggler-right text-uppercase font-weight-bold bg-primary text-white rounded"
+            type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive"
+            aria-expanded="false" aria-label="Toggle navigation">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/answers">
+                        Respostas
                     </a>
-                    
-                    <A class="btn btn-outline-light btn-social mx-1" HREF="mailto:marcus@vintem.tech?Subject=Loro%20chatbot&Body=Gostaria%20de%20mais%20informações%20de%20como%20posso%20agregar%20esta%20ferramenta%20de%20chatbot%20no%20processo%20de%20atendimento%20da%20minha%20clientela">
-                        <i class="fab fa fa-envelope"></i>
-                    </A>
+                </li>
 
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!">
-                        <i class="fab fa-fw fa-twitter"></i>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/clients">
+                        Ver conversas
                     </a>
-                    
-                    <a class="btn btn-outline-light btn-social mx-1" href="#!">
-                        <i class="fab fa-fw fa-linkedin-in"></i>
-                    </a>
-                    
-                    <a class="btn btn-outline-light btn-social mx-1" href="https://gitlab.com/marcusmello" target="_blank">
-                        <i class="fab fa-fw fa-gitlab"></i>
-                    </a>
-                
-                </div>
-                
-                <!-- Footer About Text-->
-                <div class="col-lg-6">
-                    <h4 class="text-uppercase mb-4">Sobre a Vintem</h4>
-                    <p class="lead mb-0">
-                        Desenvolvimento de softwares ágeis, escaláveis e funcionais.
-                    </p>
-                    <p>
-                        <a style="color:white" href="https://vintem.tech" target="_blank">Acesse <i>vintem.tech</i> e saiba mais</a>
-                    </p>
+                </li>
 
-                </div>
-            </div>
-        </div>
-    </footer>
+                <li class="nav-item mx-0 mx-lg-1">
+                    <a class="nav-link py-3 px-0 px-lg-3 rounded js-scroll-trigger" href="/settings">
+                        Configurações
+                    </a>
+                </li>
 
-    <!-- Copyright Section-->
-    <div class="copyright py-4 text-center text-white">
-        <div class="container">
-            <small>
-                Copyright &copy; Vintem Tech
-                <!-- This script automatically adds the current year to your website footer-->
-                <!-- (credit: https://updateyourfooter.com/)-->
-                <script>
-                    document.write(new Date().getFullYear());
-                </script>
-            </small>
+            </ul>
         </div>
     </div>
+</nav>
+
+<div ng-view>
+    {% block page_content %} {% endblock %}
+</div>
+
+<!-- Footer-->
+<footer class="footer text-center">
+    <div class="container">
+        <div class="row">
+
+            <!-- Footer Social Icons-->
+            <div class="col-lg-6 mb-5 mb-lg-0">
+                <h4 class="text-uppercase mb-4"> Vintem.tech </h4>
+
+                <a class="btn btn-outline-light btn-social mx-1" href="https://vintem.tech" target="_blank">
+                    <i class="fab fa fa-globe"></i>
+                </a>
+
+                <A class="btn btn-outline-light btn-social mx-1"
+                    HREF="mailto:marcus@vintem.tech?Subject=Loro%20chatbot&Body=Gostaria%20de%20mais%20informações%20de%20como%20posso%20agregar%20esta%20ferramenta%20de%20chatbot%20no%20processo%20de%20atendimento%20da%20minha%20clientela">
+                    <i class="fab fa fa-envelope"></i>
+                </A>
+
+                <a class="btn btn-outline-light btn-social mx-1" href="#!">
+                    <i class="fab fa-fw fa-twitter"></i>
+                </a>
+
+                <a class="btn btn-outline-light btn-social mx-1" href="#!">
+                    <i class="fab fa-fw fa-linkedin-in"></i>
+                </a>
+
+                <a class="btn btn-outline-light btn-social mx-1" href="https://gitlab.com/marcusmello" target="_blank">
+                    <i class="fab fa-fw fa-gitlab"></i>
+                </a>
+
+            </div>
+
+            <!-- Footer About Text-->
+            <div class="col-lg-6">
+                <h4 class="text-uppercase mb-4">Sobre a Vintem</h4>
+                <p class="lead mb-0">
+                    Desenvolvimento de softwares ágeis, escaláveis e funcionais.
+                </p>
+                <p>
+                    <a style="color:white" href="https://vintem.tech" target="_blank">Acesse <i>vintem.tech</i> e saiba
+                        mais</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- Copyright Section-->
+<div class="copyright py-4 text-center text-white">
+    <div class="container">
+        <small>
+            Copyright &copy; Vintem Tech
+            <!-- This script automatically adds the current year to your website footer-->
+            <!-- (credit: https://updateyourfooter.com/)-->
+            <script>
+                document.write(new Date().getFullYear());
+            </script>
+        </small>
+    </div>
+</div>
 
 {% endblock %}

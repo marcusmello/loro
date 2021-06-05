@@ -2,13 +2,13 @@
 
 from loro.core.config import settings
 from loro.lib.utils import schemas
-from loro.lib.utils.db.sql.crud.dialogs import get_all_dialogs_tags
+from loro.lib.utils.db.sql.crud.answers import get_all_tags
 from pydantic import BaseModel
 
 from .router import Request
 
-paths = settings.url_paths.dialogs
-templating_vars = settings.web_templating_variables.dialogs_dynamic_forms
+paths = settings.url_paths.answers
+templating_vars = settings.web_templating_variables.answers_dynamic_forms
 
 DEFAULT_EMPTY_TAG = templating_vars.default_empty_tag
 
@@ -61,7 +61,7 @@ def tag_selector(selected_tag=DEFAULT_EMPTY_TAG) -> str:
             </select>
         </td>
         """
-    tags = get_all_dialogs_tags()
+    tags = get_all_tags()
     if selected_tag in tags:
         tags.remove(selected_tag)
 
@@ -95,15 +95,15 @@ class CommonContext(BaseModel):
     postURL: str = paths.create
     successReturnURL: str = paths.root
     errorReturnURL: str = paths.create_error
-    dialog: schemas.Dialog = schemas.EMPTY_DIALOG
+    answer: schemas.Answer = schemas.EMPTY_ANSWER
     formControl: FormDescriptor = ValidForm()
-    dialogLeadsToTagSelector: str = str()
+    answerLeadsToTagSelector: str = str()
     choiceTextInput: str = choice_text_input()
     choiceTagSelector: str = str()
 
     def refresh_tag_selector(self):
         tag_selector_ = tag_selector()
-        self.dialogLeadsToTagSelector = tag_selector_
+        self.answerLeadsToTagSelector = tag_selector_
         self.choiceTagSelector = tag_selector_
 
 
@@ -114,7 +114,7 @@ class ParseForm:
             return str()
         return tag
 
-    def _list_to_schema(self, form: list) -> schemas.Dialog:
+    def _list_to_schema(self, form: list) -> schemas.Answer:
         tag = form.pop(0)
         header = form.pop(0)
         leads_to = self.check_tag(tag=form.pop(0))
@@ -127,14 +127,14 @@ class ParseForm:
             if choice.text:
                 choices.append(choice)
 
-        return schemas.Dialog(
+        return schemas.Answer(
             tag=tag, header=header, choices=choices, leads_to=leads_to
         )
 
-    def from_raw_form(self, dialog_form: list) -> schemas.Dialog:
-        return self._list_to_schema(form=[item[1] for item in dialog_form])
+    def from_raw_form(self, answer_form: list) -> schemas.Answer:
+        return self._list_to_schema(form=[item[1] for item in answer_form])
 
-    def from_raw_invalid_input(self, data: list) -> schemas.Dialog:
+    def from_raw_invalid_input(self, data: list) -> schemas.Answer:
         data_list = data.split(sep="&")
         return self._list_to_schema(
             form=[item.split(sep="=")[1] for item in data_list]
@@ -183,25 +183,25 @@ class DynamicContext:
         context = self._common_context()
         return {**context.dict(), **dict(request=request)}
 
-    def _filled_context(self, dialog:schemas.Dialog)-> CommonContext:
-        already_filled_choices = self._already_filled(choices=dialog.choices)
+    def _filled_context(self, answer:schemas.Answer)-> CommonContext:
+        already_filled_choices = self._already_filled(choices=answer.choices)
         context = self._common_context()
 
         context.choicesAlreadyFilled = already_filled_choices.html
         context.dynamicFieldStartIndex = already_filled_choices.index
-        context.dialog = dialog
-        context.dialogLeadsToTagSelector = tag_selector(
-            selected_tag=dialog.leads_to
+        context.answer = answer
+        context.answerLeadsToTagSelector = tag_selector(
+            selected_tag=answer.leads_to
         )
         return context
     
-    def invalid_create(self, request: Request, dialog: schemas.Dialog) -> dict:
-        context = self._filled_context(dialog)
+    def invalid_create(self, request: Request, answer: schemas.Answer) -> dict:
+        context = self._filled_context(answer)
         context.formControl = InvalidForm()
         return {**context.dict(), **dict(request=request)}
 
-    def _update_context(self, tag: str, dialog: schemas.Dialog) -> CommonContext:
-        context = self._filled_context(dialog)
+    def _update_context(self, tag: str, answer: schemas.Answer) -> CommonContext:
+        context = self._filled_context(answer)
         context.blockTitle = "Atualizar"
         context.update = True
         context.postURL = paths.update + "/{}/".format(tag)
@@ -210,16 +210,16 @@ class DynamicContext:
         return context    
     
     def default_update(
-        self, request: Request, tag: str, dialog: schemas.Dialog
+        self, request: Request, tag: str, answer: schemas.Answer
     ) -> dict:
 
-        context = self._update_context(tag, dialog)
+        context = self._update_context(tag, answer)
         return {**context.dict(), **dict(request=request)}
     
     def invalid_update(
-        self, request: Request, tag: str, dialog: schemas.Dialog
+        self, request: Request, tag: str, answer: schemas.Answer
     ) -> dict:
 
-        context = self._update_context(tag, dialog)
+        context = self._update_context(tag, answer)
         context.formControl = InvalidForm()
         return {**context.dict(), **dict(request=request)}
