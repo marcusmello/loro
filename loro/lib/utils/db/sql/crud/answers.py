@@ -33,8 +33,8 @@ def create(answer: schemas.Answer) -> schemas.Answer:
 def read(tag: str) -> schemas.Answer:
     try:
         return answer_schema(Answer.get(tag=tag))
-    except:
-        return schemas.EMPTY_ANSWER
+    except (KeyError, AttributeError):
+        return None
 
 
 @db_session
