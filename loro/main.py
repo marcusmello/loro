@@ -5,11 +5,11 @@ from loro.api.api_v1.api import api_router
 from loro.core.config import settings
 from loro.web.pages import router
 from fastapi.middleware.cors import CORSMiddleware
-from loro.lib.chatbot import create_wellcome_answer_if_it_not_exists
+from loro.lib.chatbot import create_default_answers_if_they_do_not_exist
 
 
 app = FastAPI()
-app.include_router(api_router, prefix=settings.url_paths.API_prefix_version)
+app.include_router(api_router, prefix=settings.API_prefix_version)
 app.mount("", router.app)
 
 app.add_middleware(
@@ -23,7 +23,8 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    create_wellcome_answer_if_it_not_exists()
+    create_default_answers_if_they_do_not_exist()
+    # settings startup
 
 
 def start():
