@@ -97,13 +97,13 @@ class CommonContext(BaseModel):
     errorReturnURL: str = paths.create_error
     answer: schemas.Answer = schemas.EMPTY_ANSWER
     formControl: FormDescriptor = ValidForm()
-    answerLeadsToTagSelector: str = str()
+    #answerLeadsToTagSelector: str = str()
     choiceTextInput: str = choice_text_input()
     choiceTagSelector: str = str()
 
     def refresh_tag_selector(self):
         tag_selector_ = tag_selector()
-        self.answerLeadsToTagSelector = tag_selector_
+        #self.answerLeadsToTagSelector = tag_selector_
         self.choiceTagSelector = tag_selector_
 
 
@@ -117,7 +117,7 @@ class ParseForm:
     def _list_to_schema(self, form: list) -> schemas.Answer:
         tag = form.pop(0)
         header = form.pop(0)
-        leads_to = self.check_tag(tag=form.pop(0))
+        #leads_to = self.check_tag(tag=form.pop(0))
 
         choices = list()
         while form:
@@ -127,9 +127,7 @@ class ParseForm:
             if choice.text:
                 choices.append(choice)
 
-        return schemas.Answer(
-            tag=tag, header=header, choices=choices, leads_to=leads_to
-        )
+        return schemas.Answer(tag=tag, header=header, choices=choices)
 
     def from_raw_form(self, answer_form: list) -> schemas.Answer:
         return self._list_to_schema(form=[item[1] for item in answer_form])
@@ -190,9 +188,9 @@ class DynamicContext:
         context.choicesAlreadyFilled = already_filled_choices.html
         context.dynamicFieldStartIndex = already_filled_choices.index
         context.answer = answer
-        context.answerLeadsToTagSelector = tag_selector(
-            selected_tag=answer.leads_to
-        )
+        #context.answerLeadsToTagSelector = tag_selector(
+        #    selected_tag=answer.leads_to
+        #)
         return context
     
     def invalid_create(self, request: Request, answer: schemas.Answer) -> dict:

@@ -12,7 +12,6 @@ def answer_schema(answer: Answer) -> schemas.Answer:
         choices=[
             schemas.Choice(**(json.loads(choice))) for choice in answer.choices
         ],
-        leads_to=answer.leads_to,
     )
 
 
@@ -21,7 +20,6 @@ def answer_dict(answer: schemas.Answer) -> dict:
         tag=answer.tag,
         header=answer.header,
         choices=[choice.json() for choice in answer.choices],
-        leads_to=answer.leads_to,
     )
 
 
@@ -32,11 +30,11 @@ def create(answer: schemas.Answer) -> schemas.Answer:
 
 
 @db_session
-def read(tag: str) -> Union[dict, schemas.Answer]:
+def read(tag: str) -> schemas.Answer:
     try:
         return answer_schema(Answer.get(tag=tag))
-    except:
-        return dict()
+    except (KeyError, AttributeError):
+        return None
 
 
 @db_session

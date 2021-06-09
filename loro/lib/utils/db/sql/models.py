@@ -35,7 +35,6 @@ class Answer(db.Entity, AttributeUpdater):
     tag = Required(str, unique=True)
     header = Required(LongStr)
     choices = Optional(StrArray)
-    leads_to = Optional(str)  # Answer tag
 
 
 class Message(db.Entity):

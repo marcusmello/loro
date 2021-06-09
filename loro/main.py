@@ -5,33 +5,33 @@ from loro.api.api_v1.api import api_router
 from loro.core.config import settings
 from loro.web.pages import router
 from fastapi.middleware.cors import CORSMiddleware
+from loro.lib.chatbot import create_default_answers_if_they_do_not_exist
 
-origins = [
-    "http://localhost",
-    "http://localhost:8000",
-    "http://0.0.0.0:8000",
-    "http://127.0.0.1:8000",
-    "http://localhost:8000/answers",
-    "http://localhost:8000/answers/create",
-    "http://0.0.0.0:8000/answers",
-    "http://0.0.0.0:8000/answers/create",
-    "http://127.0.0.1:8000/answers",
-    "http://127.0.0.1:8000/answers/create",
-
-]
 
 app = FastAPI()
-app.include_router(api_router, prefix=settings.API_V1_STR)
-app.mount('', router.app)
+app.include_router(api_router, prefix=settings.API_prefix_version)
+app.mount("", router.app)
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins,
+    allow_origins=settings.cors_origins.generate(),
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
+
+@app.on_event("startup")
+async def startup_event():
+    create_default_answers_if_they_do_not_exist()
+    # settings startup
+
+
 def start():
     """Launched with `poetry run loro` at root level"""
-    uvicorn.run("loro.main:app", host="0.0.0.0", port=8000, reload=True)
+    uvicorn.run(
+        "loro.main:app",
+        host=settings.cors_origins.main_domain,
+        port=settings.cors_origins.main_port,
+        reload=True,
+    )
