@@ -124,3 +124,13 @@ dmypy.json
 .pyre/
 dev.ipynb
 jupyterlog
+frontend/loro/.packages
+frontend/loro/.dart_tool/package_config_subset
+frontend/loro/.dart_tool/package_config.json
+frontend/loro/.dart_tool/version
+frontend/loro/android/local.properties
+frontend/loro/android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+frontend/loro/ios/Flutter/flutter_export_environment.sh
+frontend/loro/ios/Flutter/Generated.xcconfig
+frontend/loro/ios/Runner/GeneratedPluginRegistrant.h
+frontend/loro/ios/Runner/GeneratedPluginRegistrant.m
