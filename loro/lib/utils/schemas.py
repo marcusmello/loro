@@ -18,12 +18,13 @@ class Choice(BaseModel):
 class Answer(BaseModel):
     tag: str
     header: str
-    choices: Optional[
-        List[Choice],
-    ]
+    choices: Optional[List[Choice]]
 
-    def formatted_text(self, header_for_choices: str = str()) -> str:
-        choice = "{} - {}\n"
+    def choices_indexes_list(self):
+        return [(self.choices.index(c) + 1) for c in self.choices]
+
+    def formatted_text(self, invalid_choice_header: str = str()) -> str:
+        choice = "*{}* - {}\n"
         choices_text = "".join(
             [
                 choice.format((self.choices.index(c) + 1), c.text)
@@ -31,8 +32,8 @@ class Answer(BaseModel):
             ]
         )
 
-        return "{}\n\n{}\n\n{}".format(
-            self.header, header_for_choices, choices_text
+        return "{}\n\n{}\n\n{}\n".format(
+            invalid_choice_header, self.header, choices_text
         )
 
 
