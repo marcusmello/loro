@@ -1,0 +1,99 @@
+{% extends 'answers/base_answers.html' %}
+
+{% block interactions %}
+
+<div class="row">
+    {% for answer in answers %}
+    <div class="col-sm-4">
+        <div class="card" id="{{ answer.tag }}">
+
+            <!-- Main Card Head-->
+            <div class="card-header text-white" style="background-color: var(--green)">
+                <div class="row justify-content-start">
+                    <div class="col-1">
+                        <span class="fa fa-tags fa-xs"></span>
+                    </div>
+                    <div class="col-auto">
+                        <h5>{{ answer.tag }}</h5>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-body">
+
+                <!-- Answer Head-->
+                <h5>"{{ answer.header }}"</h5><br>
+
+                <!-- 'Leads to' Tag-->
+                {% if answer.leads_to %}
+                <div class="row justify-content-start">
+                    <div class="col-1">
+                        <span style="color: var(--green-hover)" class="fa fa-tags fa-xs"></span>
+                    </div>
+                    <div class="col-auto">
+                        <h6>
+                            <a href="#{{ answer.leads_to }}"><i>{{ answer.leads_to }}</i></a>
+                        </h6>
+                    </div>
+                </div><br>
+                {% endif %}
+
+                <!-- Choices-->
+                {% if answer.choices %}
+                <div class="card">
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            {% for choice in answer.choices %}
+
+                            <li class="list-group-item" style="color:green">
+
+                                <h6>"{{ choice.text }}"</h6>
+
+                                <div class="row justify-content-start">
+                                    <div class="col-1">
+                                        <span style="color: var(--green-hover)" class="fa fa-tags fa-xs"></span>
+                                    </div>
+                                    <div class="col-auto">
+                                        <p>
+                                            <a href="#{{ choice.leads_to }}"><i>{{ choice.leads_to }}</i></a>
+                                        </p>
+                                    </div>
+                                </div>
+
+                            </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div><br>
+                {% endif %}
+
+                <!-- Buttons-->
+                <div class="row justify-content-end">
+
+                    <!-- Edit button-->
+                    <div class="col-auto">
+                        <a href="/answers/update/{{ answer.tag }}">
+                            <span class="fas fa-edit" data-toggle="tooltip" title="Editar"></span>
+                        </a>
+                    </div>
+
+                    <!-- Delete button-->
+                    <div class="col-auto">
+                        <a href="#" data-toggle="modal" data-target="#confirmDelete"
+                            data-url="/answers/delete/{{ answer.tag }}"
+                            data-tag="{{ answer.tag }}">
+                            <span class="fa fa-trash" data-toggle="tooltip" title="Excluir"></span>
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+        </div><br>
+    </div>
+    {% endfor %}
+</div>
+
+{% include 'answers/delete_confirmation.html' %}
+
+{% endblock %}
