@@ -80,8 +80,7 @@ answers_paths.generate()
 
 class UrlPaths(BaseModel):
     answers = answers_paths
-    twilio_hook = TwilioParameters().callback_hook_path
-    API_prefix_version: str = "/api/v1"
+    #twilio_hook = TwilioParameters().callback_hook_path
 
 
 class CorsOrigins(BaseModel):
@@ -94,7 +93,7 @@ class CorsOrigins(BaseModel):
         ",{},".format(main_domain).join(["127.0.0.1", "0.0.0.0"])
     ).split(",")
 
-    ports: list = (",{},".format(main_domain).join(["80", "443"])).split(",")
+    ports: list = (",{},".format(main_port).join(["80", "443"])).split(",")
 
     def generate(self):
         all_paths = []
@@ -140,17 +139,20 @@ def possible_variation(string: str):
 
 
 class DefaultChoices(BaseModel):
-    back_choice: str = "voltar"
-    exit_choice: str = "sair"
+    show: bool = True
+    common_header: str = """... ou digite:\n\n"""
+    invalid_common_header: str = "*Escolha inválida*"
+    back_base_word: str = "voltar"
+    exit_base_word: str = "sair"
 
-    back_choices: list = possible_variation(string=back_choice)
-    exit_choices: list = possible_variation(string=exit_choice)
-
-    back_choice_message = (
-        """Digite "{}" para retornar ao menu anterior\n""".format(back_choice)
+    back_words_list: list = possible_variation(string=back_base_word)
+    exit_words_list: list = possible_variation(string=exit_base_word)
+    
+    back_choice_text:str = (
+        """*{}* - retornar ao menu anterior\n""".format(back_base_word)
     )
-    exit_choice_message = """Digite {} para encerrar o atendimento""".format(
-        exit_choice
+    exit_choice_text:str = """*{}* - encerrar o atendimento\n""".format(
+        exit_base_word
     )
 
 
@@ -158,6 +160,9 @@ class WellcomeAnswer(BaseModel):
     tag = "welcome"
     header = "Olá mundo"
 
+class ExitAnswer(BaseModel):
+    tag = "exit"
+    header = "Atendimento finalizado, obrigado!"
 
 class Settings(BaseSettings):
     class Config:
@@ -167,11 +172,14 @@ class Settings(BaseSettings):
         provider=env.str("RELATIONAL_DATABASE_PROVIDER", default="sqlite")
     )
     sql_debug: bool = False
+    API_prefix_version: str = "/api/v1"
     url_paths = UrlPaths()
     web_templating_variables = WebTemplatingVariables()
     cors_origins = CorsOrigins()
     default_choices = DefaultChoices()
-    wellcome = WellcomeAnswer()
+    wellcome_answer = WellcomeAnswer()
+    exit_answer = ExitAnswer()
+    twilio = TwilioParameters()
 
 
 settings = Settings()
