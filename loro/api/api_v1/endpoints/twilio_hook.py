@@ -29,9 +29,6 @@ async def chat(request: Request, From: str = Form(...), Body: str = Form(...)):
 
     answer_sequence_cookie = request.cookies.get("answerSequence", str())
 
-    print("cookie: ", answer_sequence_cookie)
-    print("form type: ", type(twilio_incoming_form))
-
     chat_flow = ChatFlowHandler(
         from_user=From,
         form=twilio_incoming_form,
@@ -47,6 +44,6 @@ async def chat(request: Request, From: str = Form(...), Body: str = Form(...)):
     response.set_cookie(
         key="answerSequence",
         httponly=True,
-        value=chat_flow.answer_sequence.string,
+        value=chat_flow.answer_sequence.string_,
     )
     return response
