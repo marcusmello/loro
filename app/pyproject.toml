@@ -8,6 +8,7 @@ readme = "README.md"
 
 
 [tool.poetry.dependencies]
+pony = "^0.7.14"
 python = "^3.9"
 fastapi = "^0.63.0"
 uvicorn = "^0.13.4"
@@ -24,7 +25,6 @@ pytest = "^5.2"
 pylint = "^2.8.2"
 black = "^21.5b0"
 rope = "^0.19.0"
-pony = "^0.7.14"
 ipykernel = "^5.5.5"
 jupyter = "^1.0.0"
 
@@ -34,5 +34,3 @@ build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
 loro = "loro.main:start"
-
-

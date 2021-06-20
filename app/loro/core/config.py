@@ -158,7 +158,7 @@ class DefaultChoices(BaseModel):
 
 class WellcomeAnswer(BaseModel):
     tag = "welcome"
-    header = "Olá mundo"
+    header = env.str("WELCOME_ANSWER_HEADER", default="env-fail")
 
 class ExitAnswer(BaseModel):
     tag = "exit"
