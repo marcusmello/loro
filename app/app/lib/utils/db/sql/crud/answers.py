@@ -1,7 +1,7 @@
 import json
 from typing import List, Union
-from loro.lib.utils import schemas
-from loro.lib.utils.db.sql.models import Answer
+from app.lib.utils import schemas
+from app.lib.utils.db.sql.models import Answer
 from pony.orm import db_session, select
 
 

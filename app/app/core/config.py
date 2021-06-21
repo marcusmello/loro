@@ -12,7 +12,7 @@ env = Env()
 
 class TwilioParameters(BaseModel):
     auth_token = env.str(
-        "TWILIO_AUTH_TOKEN", default="e55746c4f1e1b2ba94125f9679cb270e"
+        "TWILIO_AUTH_TOKEN", default="no_token"
     )
     callback_hook_path = "/twilio-hook"
 
@@ -80,7 +80,6 @@ answers_paths.generate()
 
 class UrlPaths(BaseModel):
     answers = answers_paths
-    #twilio_hook = TwilioParameters().callback_hook_path
 
 
 class CorsOrigins(BaseModel):
@@ -158,7 +157,7 @@ class DefaultChoices(BaseModel):
 
 class WellcomeAnswer(BaseModel):
     tag = "welcome"
-    header = "Olá mundo"
+    header = env.str("WELCOME_ANSWER_HEADER", default="env-fail")
 
 class ExitAnswer(BaseModel):
     tag = "exit"
