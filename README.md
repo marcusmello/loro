@@ -17,10 +17,8 @@ basta descompactar o arquivo e seguir as instruções abaixo:
 
 #### Pré-requisitos
 
-- Docker
-- Docker-compose
-
-Uma vez que a máquina satisfaça os pré-requisitos, basta rodar o comando:
+- [Docker](https://docs.docker.com/get-started/)
+- [Docker-compose](https://docs.docker.com/compose/install/)
 
 #### configuração inicial do sistema
 
@@ -187,4 +185,5 @@ enviada](https://www.twilio.com/whatsapp/pricing/br).
 ├── docker-compose.yml
 ├── LICENSE
 └── README.md
+└── template.env
 ```
