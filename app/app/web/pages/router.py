@@ -7,8 +7,8 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-#from loro.core.config import settings
+#from app.core.config import settings
 
 app = FastAPI()
-app.mount("/static", StaticFiles(directory="loro/web/static"), name="static")
-templates = Jinja2Templates(directory="loro/web/templates")
+app.mount("/static", StaticFiles(directory="app/web/static"), name="static")
+templates = Jinja2Templates(directory="app/web/templates")

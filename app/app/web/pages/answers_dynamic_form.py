@@ -1,8 +1,8 @@
 # pylint: skip-file
 
-from loro.core.config import settings
-from loro.lib.utils import schemas
-from loro.lib.utils.db.sql.crud.answers import get_all_tags
+from app.core.config import settings
+from app.lib.utils import schemas
+from app.lib.utils.db.sql.crud.answers import get_all_tags
 from pydantic import BaseModel
 
 from .router import Request

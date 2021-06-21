@@ -3,8 +3,8 @@
 from fastapi import APIRouter, Form, HTTPException, Request, Response
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
-from loro.lib.chatbot import ChatFlowHandler
-from loro.core.config import settings
+from app.lib.chatbot import ChatFlowHandler
+from app.core.config import settings
 
 TWILIO_AUTH_TOKEN = settings.twilio.auth_token
 router = APIRouter()
