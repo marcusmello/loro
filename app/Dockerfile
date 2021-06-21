@@ -1,15 +1,12 @@
-FROM python:3.9
-ARG DEBIAN_FRONTEND=noninteractive
-ENV PIP_DISABLE_PIP_VERSION_CHECK=on
-RUN apt-get update -y
-RUN apt-get install -y netcat-openbsd
-WORKDIR /app
-COPY pyproject.toml entrypoint.sh /app/
-RUN pip install poetry
-RUN poetry config virtualenvs.create false
-RUN poetry install --no-dev --no-ansi -n
-COPY ./loro /app/loro
-RUN chmod +x entrypoint.sh
-CMD ["sh", "entrypoint.sh"]
-#CMD ["poetry" "run" "loro"]
-#RUN poetry run loro
+FROM tiangolo/uvicorn-gunicorn-fastapi:python3.8
+
+# Install Poetry
+RUN curl -sSL https://raw.githubusercontent.com/python-poetry/poetry/master/get-poetry.py | POETRY_HOME=/opt/poetry python && \
+    cd /usr/local/bin && \
+    ln -s /opt/poetry/bin/poetry && \
+    poetry config virtualenvs.create false
+
+# Copy using poetry.lock* in case it doesn't exist yet
+COPY ./pyproject.toml ./poetry.lock* /app/
+RUN poetry install --no-root --no-dev
+COPY . /app

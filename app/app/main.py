@@ -1,11 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
 
-from loro.api.api_v1.api import api_router
-from loro.core.config import settings
-from loro.web.pages import router
+from app.api.api_v1.api import api_router
+from app.core.config import settings
+from app.web.pages import router
 from fastapi.middleware.cors import CORSMiddleware
-from loro.lib.chatbot import create_default_answers_if_they_do_not_exist
+from app.lib.chatbot import create_default_answers_if_they_do_not_exist
 
 
 app = FastAPI()

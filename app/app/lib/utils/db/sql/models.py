@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import json
 
-from loro.core.config import settings
-from loro.lib.utils import schemas
+from app.core.config import settings
+from app.lib.utils import schemas
 from pony.orm import (
     Database,
     Json,

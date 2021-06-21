@@ -1,8 +1,8 @@
 from typing import List
 
 from fastapi import APIRouter, HTTPException, Form
-from loro.lib.utils import schemas
-from loro.lib.utils.db.sql.crud import answers
+from app.lib.utils import schemas
+from app.lib.utils.db.sql.crud import answers
 
 router = APIRouter()
 

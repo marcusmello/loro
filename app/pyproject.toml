@@ -9,7 +9,7 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 pony = "^0.7.14"
-python = "^3.9"
+python = "^3.8"
 fastapi = "^0.63.0"
 uvicorn = "^0.13.4"
 pydantic = "^1.8.1"
@@ -31,6 +31,3 @@ jupyter = "^1.0.0"
 [build-system]
 requires = ["poetry-core>=1.0.0"]
 build-backend = "poetry.core.masonry.api"
-
-[tool.poetry.scripts]
-loro = "loro.main:start"

@@ -1,6 +1,6 @@
 from fastapi import APIRouter
-from loro.api.api_v1.endpoints import twilio_hook, answers
-from loro.core.config import settings
+from app.api.api_v1.endpoints import twilio_hook, answers
+from app.core.config import settings
 
 api_router = APIRouter()
 
