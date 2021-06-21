@@ -5,7 +5,15 @@ compatível com [twilio](https://www.twilio.com/whatsapp)
 
 ## Como Utilizar este software
 
-### 1 - Lançando o servidor web
+### 1 - Download
+
+Este software pode ser baixado gratuitamente e testado livremente no
+[github](https://github.com/marcusmello/loro). Se preferir, pode fazer o
+download do arquivo *.zip* [neste
+link](https://github.com/marcusmello/loro/archive/refs/heads/main.zip);
+basta descompactar o arquivo e seguir as instruções abaixo:
+
+### 2 - Lançando o servidor web
 
 #### Pré-requisitos
 
@@ -29,26 +37,26 @@ ou, para correr os contâiners em *background* (*Detached mode*):
 Acessando o endereço [http://localhost:8000/](http://localhost:8000/),
 já é possível interagir com a interface do sistema.
 
-### 2 - Criando as respostas
+### 3 - Criando as respostas
 
 Irure sunt fugiat ea quis consectetur laborum laborum incididunt fugiat
 nulla mollit. Eiusmod enim minim nulla non fugiat qui est anim sunt
 ipsum commodo do laboris. Laborum incididunt occaecat aute nostrud.
 
-### 3 - Configurando URL de callback no twilio
+### 4 - Configurando URL de callback no twilio
 
 Ad veniam pariatur id eu labore laboris ea. Dolore id ullamco esse nisi
 excepteur aliqua laborum nisi ipsum id magna et duis dolore.
 Exercitation ipsum dolore laborum.
 
-#### 3.1 - Modo sandbox
+#### 4.1 - Modo sandbox
 
 Enim ipsum id velit ullamco ut amet quis velit. Esse magna nostrud
 nostrud fugiat. Consectetur minim sit culpa ipsum non quis anim veniam
 voluptate pariatur proident deserunt eu. Labore aliqua sint consectetur
 incididunt ut enim aute velit proident esse enim ad proident.
 
-#### 3.2 - Conta verificada
+#### 4.2 - Conta verificada
 
 Aliqua do eu anim minim adipisicing. Ad cupidatat deserunt proident
 dolore culpa commodo cupidatat sit. Eu Lorem ea nulla pariatur deserunt
