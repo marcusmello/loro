@@ -4,7 +4,7 @@ from fastapi import APIRouter, Form, HTTPException, Request, Response
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
 from app.lib.chatbot import ChatFlowHandler
-from app.core.config import settings
+from app.settings.general import settings
 
 TWILIO_AUTH_TOKEN = settings.twilio.auth_token
 router = APIRouter()

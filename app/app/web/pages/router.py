@@ -7,7 +7,7 @@ from fastapi.responses import HTMLResponse, RedirectResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
 
-#from app.core.config import settings
+#from app.settings.general import settings
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="app/web/static"), name="static")
