@@ -1,12 +1,11 @@
 import uvicorn
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.api_v1.api import api_router
-from app.core.config import settings
+from app.settings.general import settings
+from app.lib.chatbot import DefaultAnswers
 from app.web.pages import router
-from fastapi.middleware.cors import CORSMiddleware
-from app.lib.chatbot import create_default_answers_if_they_do_not_exist
-
 
 app = FastAPI()
 app.include_router(api_router, prefix=settings.API_prefix_version)
@@ -23,7 +22,7 @@ app.add_middleware(
 
 @app.on_event("startup")
 async def startup_event():
-    create_default_answers_if_they_do_not_exist()
+    DefaultAnswers().create()
     # settings startup
 
 
