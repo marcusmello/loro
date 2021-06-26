@@ -1,36 +1,30 @@
 import json
 
-from app.core.config import settings
 from app.lib.utils import schemas
 from app.lib.utils.db.sql.crud import answers
+from app.settings.general import settings
 from pydantic import BaseModel
 
-
-WELLCOME_TAG = settings.wellcome_answer.tag
-EXIT_TAG = settings.exit_answer.tag
+DEFAULT_ANSWERS = settings.default_answers
+WELCOME_TAG = DEFAULT_ANSWERS.welcome_answer.tag
+EXIT_TAG = settings.default_answers.exit_answer.tag
 DEFAULT_CHOICES = settings.default_choices
 
 
-def create_default_answers_if_they_do_not_exist():
-    wellcome_answer = answers.read(tag=WELLCOME_TAG)
-    if not wellcome_answer:
-        answers.create(
-            answer=schemas.Answer(
-                tag=WELLCOME_TAG,
-                header=settings.wellcome_answer.header,
-                choices=list(),
-            )
-        )
+class DefaultAnswers:
+    @staticmethod
+    def create_if_do_not_exist(answer: schemas.Answer):
+        answer_in_db = answers.read(tag=answer.tag)
+        if not answer_in_db:
+            answers.create(answer=answer)
 
-    exit_answer = answers.read(tag=EXIT_TAG)
-    if not exit_answer:
-        answers.create(
-            answer=schemas.Answer(
-                tag=EXIT_TAG,
-                header=settings.exit_answer.header,
-                choices=list(),
-            )
-        )
+    def create(self):
+        self.create_if_do_not_exist(answer=DEFAULT_ANSWERS.welcome_answer)
+        self.create_if_do_not_exist(answer=DEFAULT_ANSWERS.exit_answer)
+
+        if settings.create_extra_answers_on_startup:
+            for answer in DEFAULT_ANSWERS.extra:
+                self.create_if_do_not_exist(answer=answer)
 
 
 class AnswerSequence:
@@ -41,7 +35,7 @@ class AnswerSequence:
 
     def make_list(self):
         if not self.string_:
-            self.list_ = [WELLCOME_TAG]
+            self.list_ = [WELCOME_TAG]
             return None
 
         answers_sequence_raw_list = self.string_.split(sep=self.separator_)
@@ -67,14 +61,13 @@ class ChatFlowHandler:
     def render_response(self, choice_not_valid=False, final_answer=False):
         sub_header = str()
         extra_default_choices_text = "{}{}".format(
-            DEFAULT_CHOICES.common_header,
-            DEFAULT_CHOICES.exit_choice_text
+            DEFAULT_CHOICES.common_header, DEFAULT_CHOICES.exit_choice_text
         )
 
         if choice_not_valid:
             sub_header = DEFAULT_CHOICES.invalid_common_header
 
-        if self.current_answer.tag != WELLCOME_TAG:
+        if self.current_answer.tag != WELCOME_TAG:
             extra_default_choices_text += DEFAULT_CHOICES.back_choice_text
 
         response = self.current_answer.formatted_text(sub_header)
@@ -95,7 +88,7 @@ class ChatFlowHandler:
     def first_wellcome_proceed(self):
         self.answer_sequence.make_string()
 
-        self.current_answer = answers.read(tag=WELLCOME_TAG)
+        self.current_answer = answers.read(tag=WELCOME_TAG)
         self.render_response()
 
     def exit_chat(self):
@@ -139,7 +132,10 @@ class ChatFlowHandler:
         if choice in DEFAULT_CHOICES.exit_words_list:
             return self.exit_chat()
 
-        if choice in DEFAULT_CHOICES.back_words_list and self.current_answer.tag != WELLCOME_TAG:
+        if (
+            choice in DEFAULT_CHOICES.back_words_list
+            and self.current_answer.tag != WELCOME_TAG
+        ):
             return self.back_chat()
 
         if not self.current_answer.choices_indexes_list():
