@@ -1,6 +1,6 @@
 # pylint: skip-file
 
-from app.core.config import settings
+from app.settings.general import settings
 from app.lib.utils import schemas
 from app.lib.utils.db.sql.crud.answers import get_all_tags
 from pydantic import BaseModel

@@ -1,5 +1,7 @@
 # Lôro
 
+[![pipeline status](https://gitlab.com/vintem/chatbots/loro/badges/main/pipeline.svg)](https://gitlab.com/vintem/chatbots/loro/-/commits/main)
+
 Um *Chatbot* para whatsapp feito em python, bootstrap e docker;
 compatível com [twilio](https://www.twilio.com/whatsapp)
 
@@ -7,11 +9,11 @@ compatível com [twilio](https://www.twilio.com/whatsapp)
 
 ### 1 - Download
 
-Este software pode ser baixado gratuitamente e testado livremente no
-[github](https://github.com/marcusmello/loro). Se preferir, pode fazer o
-download do arquivo *.zip* [neste
-link](https://github.com/marcusmello/loro/archive/refs/heads/main.zip);
-basta descompactar o arquivo e seguir as instruções abaixo:
+Este software pode ser [baixado
+gratuitamente](https://github.com/marcusmello/loro/archive/refs/heads/main.zip)
+e testado livremente; basta descompactar o arquivo (ou navegar até a
+pasta */loro*, caso tenha clonado a partir do github) e seguir as
+instruções abaixo:
 
 ### 2 - Lançando o servidor web
 
@@ -131,8 +133,6 @@ enviada](https://www.twilio.com/whatsapp/pricing/br).
 │   │   │       └── endpoints
 │   │   │           ├── answers.py
 │   │   │           └── twilio_hook.py
-│   │   ├── core
-│   │   │   └── config.py
 │   │   ├── lib
 │   │   │   ├── chatbot
 │   │   │   └── utils
@@ -140,10 +140,19 @@ enviada](https://www.twilio.com/whatsapp/pricing/br).
 │   │   │       │   └── sql
 │   │   │       │       ├── crud
 │   │   │       │       │   └── answers.py
+│   │   │       │       ├── database.sqlite
 │   │   │       │       └── models.py
 │   │   │       ├── exceptions.py
-│   │   │       └── schemas.py
+│   │   │       ├── schemas.py
+│   │   │       └── tools
+│   │   │           └── string_conversion.py
 │   │   ├── main.py
+│   │   ├── settings
+│   │   │   ├── database_adapters.py
+│   │   │   ├── default_answers.py
+│   │   │   ├── general.py
+│   │   │   ├── url_paths_handler.py
+│   │   │   └── web_templating.py
 │   │   └── web
 │   │       ├── pages
 │   │       │   ├── answers_dynamic_form.py
@@ -180,10 +189,11 @@ enviada](https://www.twilio.com/whatsapp/pricing/br).
 │   │           ├── home.html
 │   │           └── page_template.html
 │   ├── Dockerfile
+│   ├── poetry.lock
 │   └── pyproject.toml
 ├── CHANGELOG.md
 ├── docker-compose.yml
 ├── LICENSE
-└── README.md
+├── README.md
 └── template.env
 ```

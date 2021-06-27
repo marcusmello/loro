@@ -4,7 +4,7 @@ from fastapi import APIRouter, Form, HTTPException, Request, Response
 from twilio.request_validator import RequestValidator
 from twilio.twiml.messaging_response import MessagingResponse
 from app.lib.chatbot import ChatFlowHandler
-from app.core.config import settings
+from app.settings.general import settings
 
 TWILIO_AUTH_TOKEN = settings.twilio.auth_token
 router = APIRouter()
@@ -15,17 +15,18 @@ async def chat(request: Request, From: str = Form(...), Body: str = Form(...)):
     twilio_response = MessagingResponse()
     response_message = twilio_response.message()
 
-    validator = RequestValidator(TWILIO_AUTH_TOKEN)
+    validator = RequestValidator(settings.twilio.auth_token)
     twilio_incoming_form = await request.form()
 
-    if not validator.validate(
-        str(request.url),
-        twilio_incoming_form,
-        request.headers.get("X-Twilio-Signature", ""),
-    ):
-        raise HTTPException(
-            status_code=400, detail="Error in Twilio Signature"
-        )
+    if settings.twilio.proceed_validation:
+        if not validator.validate(
+            str(request.url),
+            twilio_incoming_form,
+            request.headers.get("X-Twilio-Signature", ""),
+        ):
+            raise HTTPException(
+                status_code=400, detail="Error in Twilio Signature"
+            )
 
     answer_sequence_cookie = request.cookies.get("answerSequence", str())
 

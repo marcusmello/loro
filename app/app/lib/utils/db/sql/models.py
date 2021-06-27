@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 
-from app.core.config import settings
+from app.settings.general import settings
 from app.lib.utils import schemas
 from pony.orm import (
     Database,
