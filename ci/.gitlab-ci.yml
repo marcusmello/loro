@@ -1,0 +1,27 @@
+image: guss77/dind-awscli
+
+services:
+  - docker:dind
+
+stages:
+  - build
+
+build_release:
+  stage: build
+
+  only:
+    - release
+
+  variables:
+    docker_registry: registry.gitlab.com
+    path: vintem/chatbots
+    image_name: loro
+    path_to_dockerfile: ./app
+    release_tag_version: 0.1.0
+  
+  before_script:
+    - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
+    - chmod +x ./ci/build_release.sh
+
+  script: 
+    - ./ci/build_release.sh
