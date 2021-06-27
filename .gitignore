@@ -1,7 +1,7 @@
 # Dev/environment
 .vscode/
 BKP_*
-jupyterlog
+.jupyterlog
 DEPRECATED_*
 *.ipynb
 database.sqlite
