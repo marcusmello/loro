@@ -20,6 +20,7 @@ env = Env()
 
 
 class TwilioParameters(BaseModel):
+    proceed_validation: bool = env.bool("PROCEED_VALIDATION", default=False)
     auth_token = env.str("TWILIO_AUTH_TOKEN", default="no_token")
     callback_hook_path = env.str(
         "TWILIO_CALLBACK_HOOK_PATH", default="/twilio-hook"
