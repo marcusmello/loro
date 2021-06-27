@@ -1,5 +1,7 @@
 # Changelog
 
+## Unreleased
+
 ## [0.1.1-alpha.0] - 2021-06-27
 
 ### Refactor
