@@ -1,13 +1,17 @@
 stages:
   - build
 
+services:
+  - name: docker:dind
+    alias: dockerhost
+
 variables:
   docker_registry: registry.gitlab.com
   path: vintem/chatbots
   image_name: loro
   path_to_dockerfile: ./app
   release_tag_version: 0.1.1-alpha.0
-  DOCKER_HOST: tcp://localhost:2375
+  DOCKER_HOST: tcp://dockerhost:2375
 
 build_release:
   image: docker:18.09-dind
