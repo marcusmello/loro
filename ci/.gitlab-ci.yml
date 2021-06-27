@@ -2,7 +2,7 @@ stages:
   - build
 
 build_release:
-  image: docker:latest
+  image: docker:18.09.7-dind
   stage: build
 
   only:
@@ -16,7 +16,6 @@ build_release:
     release_tag_version: 0.1.0
   
   before_script:
-    - echo $GITLAB_REGISTRY_LOGIN
     - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
     - chmod +x ./ci/build_release.sh
 
