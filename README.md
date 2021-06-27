@@ -9,11 +9,11 @@ compatível com [twilio](https://www.twilio.com/whatsapp)
 
 ### 1 - Download
 
-Este software pode ser baixado gratuitamente e testado livremente no
-[github](https://github.com/marcusmello/loro). Se preferir, pode fazer o
-download do arquivo *.zip* [neste
-link](https://github.com/marcusmello/loro/archive/refs/heads/main.zip);
-basta descompactar o arquivo e seguir as instruções abaixo:
+Este software pode ser [baixado
+gratuitamente](https://github.com/marcusmello/loro/archive/refs/heads/main.zip)
+e testado livremente; basta descompactar o arquivo (ou navegar até a
+pasta */loro*, caso tenha clonado a partir do github) e seguir as
+instruções abaixo:
 
 ### 2 - Lançando o servidor web
 
