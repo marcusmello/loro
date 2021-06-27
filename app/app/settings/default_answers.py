@@ -79,9 +79,9 @@ def fake_answers_factory() -> List[Choice]:
                 answers.append(
                     Answer(
                         tag=tag,
-                        header="""Resolvido!
-                    Basta clicar no link abaixo para resolver o 
-                    serviço *{}* categoria *{}*:\n\n{}""".format(
+                        header="Resolvido! Basta clicar no link abaixo\
+                            para resolver o serviço *{}* categoria\
+                            *{}*:\n\n{}".format(
                             service, category, fake_link(tag)
                         ),
                         choices=list(),
