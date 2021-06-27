@@ -1,9 +1,10 @@
-stages:
-  - build
+image: guss77/dind-awscli
 
 services:
-  - name: docker:dind
-    alias: dockerhost
+  - docker:dind
+
+stages:
+  - build
 
 variables:
   docker_registry: registry.gitlab.com
@@ -13,30 +14,25 @@ variables:
   release_tag_version: 0.1.1-alpha.0
   DOCKER_HOST: tcp://dockerhost:2375
 
-build_release:
-  image: docker:18.09-dind
-  stage: build
+before_script:
+  - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
+  - chmod +x ./ci/build_release.sh
+  - chmod +x ./ci/build_latest.sh
 
+build_release:
   only:
     - release
 
-  before_script:
-    - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
-    - chmod +x ./ci/build_release.sh
+  stage: build
 
   script: 
     - ./ci/build_release.sh
 
 build_latest:
-  image: docker:18.09-dind
-  stage: build
-
   only:
     - main
 
-  before_script:
-    - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
-    - chmod +x ./ci/build_latest.sh
+  stage: build
 
   script: 
     - ./ci/build_latest.sh
