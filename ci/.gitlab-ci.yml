@@ -1,27 +1,41 @@
 image: guss77/dind-awscli
 
 services:
-  - docker:dind
+  - name: docker:dind
+    alias: dockerhost
 
 stages:
   - build
 
-build_release:
-  stage: build
+variables:
+  docker_registry: registry.gitlab.com
+  path: vintem/chatbots
+  image_name: loro
+  path_to_dockerfile: ./app
+  release_tag_version: 0.1.1-alpha.0
+  DOCKER_HOST: tcp://dockerhost:2375
 
+before_script:
+  - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
+  - chmod +x ./ci/build_release.sh
+  - chmod +x ./ci/build_latest.sh
+
+build_release:
   only:
     - release
 
-  variables:
-    docker_registry: registry.gitlab.com
-    path: vintem/chatbots
-    image_name: loro
-    path_to_dockerfile: ./app
-    release_tag_version: 0.1.0
-  
-  before_script:
-    - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
-    - chmod +x ./ci/build_release.sh
+  stage: build
 
   script: 
     - ./ci/build_release.sh
+
+build_latest:
+  only:
+    - main
+
+  stage: build
+
+  script: 
+    - ./ci/build_latest.sh
+
+        
