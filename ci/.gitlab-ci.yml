@@ -9,7 +9,7 @@ variables:
   release_tag_version: 0.1.1-alpha.0
 
 build_release:
-  image: docker:18.09.7-dind
+  image: docker:18.09-dind
   stage: build
 
   only:
@@ -23,7 +23,7 @@ build_release:
     - ./ci/build_release.sh
 
 build_latest:
-  image: docker:18.09.7-dind
+  image: docker:18.09-dind
   stage: build
 
   only:
