@@ -1,7 +1,8 @@
 image: guss77/dind-awscli
 
 services:
-  - docker:dind
+  - name: docker:dind
+    alias: dockerhost
 
 stages:
   - build
