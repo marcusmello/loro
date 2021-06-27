@@ -15,17 +15,18 @@ async def chat(request: Request, From: str = Form(...), Body: str = Form(...)):
     twilio_response = MessagingResponse()
     response_message = twilio_response.message()
 
-    validator = RequestValidator(TWILIO_AUTH_TOKEN)
+    validator = RequestValidator(settings.twilio.auth_token)
     twilio_incoming_form = await request.form()
 
-    if not validator.validate(
-        str(request.url),
-        twilio_incoming_form,
-        request.headers.get("X-Twilio-Signature", ""),
-    ):
-        raise HTTPException(
-            status_code=400, detail="Error in Twilio Signature"
-        )
+    if settings.twilio.proceed_validation:
+        if not validator.validate(
+            str(request.url),
+            twilio_incoming_form,
+            request.headers.get("X-Twilio-Signature", ""),
+        ):
+            raise HTTPException(
+                status_code=400, detail="Error in Twilio Signature"
+            )
 
     answer_sequence_cookie = request.cookies.get("answerSequence", str())
 
