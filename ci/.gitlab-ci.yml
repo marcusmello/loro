@@ -1,6 +1,13 @@
 stages:
   - build
 
+variables:
+  docker_registry: registry.gitlab.com
+  path: vintem/chatbots
+  image_name: loro
+  path_to_dockerfile: ./app
+  release_tag_version: 0.1.1-alpha.0
+
 build_release:
   image: docker:18.09.7-dind
   stage: build
@@ -8,16 +15,25 @@ build_release:
   only:
     - release
 
-  variables:
-    docker_registry: registry.gitlab.com
-    path: vintem/chatbots
-    image_name: loro
-    path_to_dockerfile: ./app
-    release_tag_version: 0.1.0
-  
   before_script:
     - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
     - chmod +x ./ci/build_release.sh
 
   script: 
     - ./ci/build_release.sh
+
+build_latest:
+  image: docker:18.09.7-dind
+  stage: build
+
+  only:
+    - main
+
+  before_script:
+    - docker login registry.gitlab.com -u $GITLAB_REGISTRY_LOGIN -p $GITLAB_REGISTRY_PASS
+    - chmod +x ./ci/build_latest.sh
+
+  script: 
+    - ./ci/build_latest.sh
+
+        
