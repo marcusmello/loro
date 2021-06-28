@@ -17,16 +17,20 @@ instruções abaixo:
 
 ### 2 - Lançando o servidor web
 
-#### Pré-requisitos
+#### 2.1 - Pré-requisitos
 
 - [Docker](https://docs.docker.com/get-started/)
 - [Docker-compose](https://docs.docker.com/compose/install/)
 
 #### configuração inicial do sistema
 
-Renomeie o arquivo *template.env* apenas para *.env*, altere as variáveis para os valores desejados, respeitando as regras descritas no arquivo
+Renomeie o arquivo *template.env* apenas para *.env*, altere as variáveis para os valores desejados, respeitando as regras descritas no arquivo.
 
-#### Subindo o cluster
+#### 2.2 - Subindo o cluster
+
+Dica: Caso queira subir um container [postgres](https://www.postgresql.org/) para banco de dados e um container [pgadmin](https://www.pgadmin.org/) para monitoramento deste banco, basta remover os comentários das seções pertinentes do arquivo *docker-compose.yml*.
+
+Apenas rode o comando:
 
     docker-compose up
 
@@ -36,6 +40,12 @@ ou, para correr os contâiners em *background* (*Detached mode*):
 
 Acessando o endereço [http://localhost:8000/](http://localhost:8000/),
 já é possível interagir com a interface do sistema.
+
+Também, graças ao
+[swagger](https://swagger.io/tools/open-source/getting-started/)
+embarcado com o [fastapi](https://fastapi.tiangolo.com), é possível
+explorar a API e sua documentação no link
+[http://localhost:8000/docs](http://localhost:8000/docs).
 
 ### 3 - Criando as respostas
 
