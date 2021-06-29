@@ -1,3 +1,5 @@
+version: '3.9'
+
 services:
 #  postgres:
 #    image: postgres:13.2-alpine
@@ -16,8 +18,8 @@ services:
       - ".env"
     ports:
       - "8000:80"
-    depends_on:
-      - postgres
+#    depends_on:
+#      - postgres
 
 #  pgadmin:
 #    image: dpage/pgadmin4
