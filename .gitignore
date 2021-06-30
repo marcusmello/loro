@@ -6,6 +6,8 @@ DEPRECATED_*
 *.ipynb
 database.sqlite
 DEV_*
+dev*
+aws/*
 
 
 # Byte-compiled / optimized / DLL files

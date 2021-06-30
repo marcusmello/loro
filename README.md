@@ -1,6 +1,7 @@
 # Lôro
 
-[![pipeline status](https://gitlab.com/vintem/chatbots/loro/badges/main/pipeline.svg)](https://gitlab.com/vintem/chatbots/loro/-/commits/main)
+[![pipeline
+status](https://gitlab.com/vintem/chatbots/loro/badges/main/pipeline.svg)](https://gitlab.com/vintem/chatbots/loro/-/commits/main)
 
 Um *Chatbot* para whatsapp feito em python, bootstrap e docker;
 compatível com [twilio](https://www.twilio.com/whatsapp)
@@ -17,16 +18,28 @@ instruções abaixo:
 
 ### 2 - Lançando o servidor web
 
-#### Pré-requisitos
+#### 2.1 - Pré-requisitos
 
 - [Docker](https://docs.docker.com/get-started/)
 - [Docker-compose](https://docs.docker.com/compose/install/)
 
 #### configuração inicial do sistema
 
-Renomeie o arquivo *template.env* apenas para *.env*, altere as variáveis para os valores desejados, respeitando as regras descritas no arquivo
+Renomeie o arquivo *template.env* apenas para *.env*, altere as
+variáveis para os valores desejados, respeitando as regras descritas no
+arquivo.
 
-#### Subindo o cluster
+Dica: Por padrão, será utilizado um banco dados '*sqlite*', e tudo
+funcionará bem. Porém, caso queira subir um container
+[postgres](https://www.postgresql.org/) para banco de dados e um
+container [pgadmin](https://www.pgadmin.org/) para monitoramento deste
+banco, basta remover os comentários das seções pertinentes do arquivo
+*docker-compose.yml*. Também será necessário, no arquivo *.env*., fazer:
+**RELATIONAL_DATABASE_PROVIDER=postgres**
+
+#### 2.2 - Subindo o cluster
+
+Apenas rode o comando:
 
     docker-compose up
 
@@ -36,6 +49,12 @@ ou, para correr os contâiners em *background* (*Detached mode*):
 
 Acessando o endereço [http://localhost:8000/](http://localhost:8000/),
 já é possível interagir com a interface do sistema.
+
+Também, graças ao
+[swagger](https://swagger.io/tools/open-source/getting-started/)
+embarcado com o [fastapi](https://fastapi.tiangolo.com), é possível
+explorar a API e sua documentação no link
+[http://localhost:8000/docs](http://localhost:8000/docs).
 
 ### 3 - Criando as respostas
 
@@ -77,8 +96,8 @@ renderizado pelo sistema de templates
 
 O projeto tem arquitetura monolítica modular (mais detalhes abaixo em
 [Estrutura do projeto](#estrutura-do-projeto), tendo suas dependências,
-ambiente virtual, empacotamento gerenciados pelo [poetry](https://python-poetry.org/) num nível
-mais baixo, e pelo
+ambiente virtual, empacotamento gerenciados pelo
+[poetry](https://python-poetry.org/) num nível mais baixo, e pelo
 [docker](https://www.docker.com/)/[docker-compose](https://github.com/docker/compose)
 numa abstração mais superior.
 
@@ -140,7 +159,6 @@ enviada](https://www.twilio.com/whatsapp/pricing/br).
 │   │   │       │   └── sql
 │   │   │       │       ├── crud
 │   │   │       │       │   └── answers.py
-│   │   │       │       ├── database.sqlite
 │   │   │       │       └── models.py
 │   │   │       ├── exceptions.py
 │   │   │       ├── schemas.py
