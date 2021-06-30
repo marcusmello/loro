@@ -1,24 +1,22 @@
+from app.lib.utils.db.sql.crud import answers
 from app.settings.general import settings
 
-# from app.lib.utils import schemas
-from app.lib.utils.db.sql.crud import answers
-
-from .answers_dynamic_form import (
-    DynamicContext,
-    ParseForm,
-)
+from .answers_dynamic_form import DynamicContext, ParseForm
 from .router import (
     HTMLResponse,
+    HTTPException,
     RedirectResponse,
     Request,
     app,
     status,
     templates,
-    HTTPException,
 )
 
 paths = settings.url_paths.answers
-
+NON_DELETABLE_TAGS = [
+    settings.default_answers.welcome_answer.tag,
+    settings.default_answers.exit_answer,
+]
 DYNAMIC_FORM = "answers/dynamic_form.html"
 dynamic_context = DynamicContext()
 parse_form = ParseForm()
@@ -31,7 +29,11 @@ def get(request: Request, limit: int = 100):
     if answers_in_db:
         return templates.TemplateResponse(
             "answers/answers.html",
-            context={"request": request, "answers": answers_in_db},
+            context={
+                "request": request,
+                "answers": answers_in_db,
+                "non_deletable": NON_DELETABLE_TAGS,
+            },
         )
 
     return templates.TemplateResponse(
@@ -71,8 +73,9 @@ def invalid_create(request: Request, data: str):
         context=dynamic_context.invalid_create(request, answers),
     )
 
+
 @app.get(path=paths.update + "/{tag}", response_class=HTMLResponse)
-def update(request: Request, tag:str):
+def update(request: Request, tag: str):
     answer_to_update = answers.read(tag=tag)
 
     return templates.TemplateResponse(
@@ -80,8 +83,9 @@ def update(request: Request, tag:str):
         context=dynamic_context.default_update(request, tag, answer_to_update),
     )
 
+
 @app.post(path=paths.update + "/{tag}")
-async def update(request: Request, tag:str):
+async def update(request: Request, tag: str):
     form = await request.form()
     new_answers = parse_form.from_raw_form(answer_form=form.multi_items())
 
@@ -105,7 +109,10 @@ def invalid_update(request: Request, tag: str, data: str):
         context=dynamic_context.invalid_update(request, tag, answer_to_update),
     )
 
+
 @app.get(path=paths.delete + "/{tag}", response_class=HTMLResponse)
 def delete(tag: str):
     answers.delete(tag=tag)
-    return RedirectResponse(url=paths.root, status_code=status.HTTP_303_SEE_OTHER)
+    return RedirectResponse(
+        url=paths.root, status_code=status.HTTP_303_SEE_OTHER
+    )
