@@ -64,7 +64,7 @@
                     </div>
 
                     <!-- Delete button-->
-                    {% if answer.tag not in non_deletable|safe %}
+                    {% if answer.tag not in non_deletable %}
                     <div class="col-auto">
                         <a href="#" data-toggle="modal" data-target="#confirmDelete"
                             data-url="/answers/delete/{{ answer.tag }}"
