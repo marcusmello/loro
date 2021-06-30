@@ -15,7 +15,7 @@ from .router import (
 paths = settings.url_paths.answers
 NON_DELETABLE_TAGS = [
     settings.default_answers.welcome_answer.tag,
-    settings.default_answers.exit_answer,
+    settings.default_answers.exit_answer.tag,
 ]
 DYNAMIC_FORM = "answers/dynamic_form.html"
 dynamic_context = DynamicContext()
