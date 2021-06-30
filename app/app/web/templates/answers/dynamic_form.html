@@ -35,8 +35,14 @@
                         </h6>
                     </label>
 
+                    {% if answer.tag in [welcome_tag, exit_tag] %}
+                    <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
+                        placeholder="Identificador da resposta" value="{{ answer.tag }}" disabled>
+                    {% else %}
                     <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
                         placeholder="Identificador da resposta" value="{{ answer.tag }}">
+                    {% endif %}
+
                 </div>
             </div> <br>
 
@@ -64,9 +70,11 @@
                         {{ choicesAlreadyFilled|safe }}
                     </tr>
                 </table>
+                {% if answer.tag != exit_tag %}
                 <td>
                     <button type="button" name="add" id="add" class="btn btn-success">Adicionar Opção</button>
                 </td>
+                {% endif %}
 
                 <input type="button" name="submit" id="submit" class="btn btn-info" value="Salvar Resposta" />
             </div>
