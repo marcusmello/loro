@@ -84,20 +84,20 @@ def update(request: Request, tag: str):
     )
 
 
-@app.post(path=paths.update + "/{tag}")
+@app.post(path=paths.update + "/{tag}/")
 async def update(request: Request, tag: str):
     form = await request.form()
-    new_answers = parse_form.from_raw_form(answer_form=form.multi_items())
+    new_answer = parse_form.from_raw_form(answer_form=form.multi_items())
 
-    if not (new_answers.tag and new_answers.header):
+    if not (new_answer.tag and new_answer.header):
         raise HTTPException(status_code=502)
 
-    if new_answers.tag != tag:
-        tag_already_exists = answers.read(tag=new_answers.tag)
+    if new_answer.tag != tag:
+        tag_already_exists = answers.read(tag=new_answer.tag)
         if tag_already_exists:
             raise HTTPException(status_code=403)
 
-    answers.update(tag=tag, new_answer=new_answers)
+    answers.update(tag=tag, new_answer=new_answer)
 
 
 @app.get(path=paths.update_error + "/{tag}/{data}")
