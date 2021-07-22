@@ -117,7 +117,6 @@ class ParseForm:
     def _list_to_schema(self, form: list) -> schemas.Answer:
         tag = form.pop(0)
         header = form.pop(0)
-        # leads_to = self.check_tag(tag=form.pop(0))
 
         choices = list()
         while form:
