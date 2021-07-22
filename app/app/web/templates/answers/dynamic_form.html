@@ -37,7 +37,7 @@
 
                     {% if answer.tag in [welcome_tag, exit_tag] %}
                     <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
-                        placeholder="Identificador da resposta" value="{{ answer.tag }}" disabled>
+                        placeholder="Identificador da resposta" value="{{ answer.tag }}" readonly>
                     {% else %}
                     <input type="text" class="{{ formControl.form_class }}" name="tag" id="tag"
                         placeholder="Identificador da resposta" value="{{ answer.tag }}">
