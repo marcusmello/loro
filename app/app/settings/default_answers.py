@@ -14,7 +14,8 @@ from app.lib.utils.tools.string_conversion import case_variations
 
 thismodule = sys.modules[__name__]
 
-WELCOME_TAG = "welcome"
+WELCOME_TAG = "abertura"
+EXIT_TAG = "saída"
 SERVICE_1_TAG = "servico1"
 SERVICE_2_TAG = "servico2"
 
@@ -103,7 +104,7 @@ class DefaultAnswers(BaseModel):
         ],
     )
     exit_answer: Answer = Answer(
-        tag="exit", header="Atendimento finalizado, obrigado!", choices=[]
+        tag=EXIT_TAG, header="Atendimento finalizado, obrigado!", choices=[]
     )
     extra: List[Answer] = fake_answers_factory()
 

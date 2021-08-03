@@ -97,13 +97,13 @@ class CommonContext(BaseModel):
     errorReturnURL: str = paths.create_error
     answer: schemas.Answer = schemas.EMPTY_ANSWER
     formControl: FormDescriptor = ValidForm()
-    #answerLeadsToTagSelector: str = str()
     choiceTextInput: str = choice_text_input()
     choiceTagSelector: str = str()
+    welcome_tag:str = settings.default_answers.welcome_answer.tag
+    exit_tag: str = settings.default_answers.exit_answer.tag
 
     def refresh_tag_selector(self):
         tag_selector_ = tag_selector()
-        #self.answerLeadsToTagSelector = tag_selector_
         self.choiceTagSelector = tag_selector_
 
 
@@ -117,7 +117,6 @@ class ParseForm:
     def _list_to_schema(self, form: list) -> schemas.Answer:
         tag = form.pop(0)
         header = form.pop(0)
-        #leads_to = self.check_tag(tag=form.pop(0))
 
         choices = list()
         while form:
@@ -181,39 +180,39 @@ class DynamicContext:
         context = self._common_context()
         return {**context.dict(), **dict(request=request)}
 
-    def _filled_context(self, answer:schemas.Answer)-> CommonContext:
+    def _filled_context(self, answer: schemas.Answer) -> CommonContext:
         already_filled_choices = self._already_filled(choices=answer.choices)
         context = self._common_context()
 
         context.choicesAlreadyFilled = already_filled_choices.html
         context.dynamicFieldStartIndex = already_filled_choices.index
         context.answer = answer
-        #context.answerLeadsToTagSelector = tag_selector(
-        #    selected_tag=answer.leads_to
-        #)
+
         return context
-    
+
     def invalid_create(self, request: Request, answer: schemas.Answer) -> dict:
         context = self._filled_context(answer)
         context.formControl = InvalidForm()
         return {**context.dict(), **dict(request=request)}
 
-    def _update_context(self, tag: str, answer: schemas.Answer) -> CommonContext:
+    def _update_context(
+        self, tag: str, answer: schemas.Answer
+    ) -> CommonContext:
         context = self._filled_context(answer)
         context.blockTitle = "Atualizar"
         context.update = True
         context.postURL = paths.update + "/{}/".format(tag)
         context.errorReturnURL = paths.update_error + "/{}".format(tag)
         context.originTag = tag
-        return context    
-    
+        return context
+
     def default_update(
         self, request: Request, tag: str, answer: schemas.Answer
     ) -> dict:
 
         context = self._update_context(tag, answer)
         return {**context.dict(), **dict(request=request)}
-    
+
     def invalid_update(
         self, request: Request, tag: str, answer: schemas.Answer
     ) -> dict:
